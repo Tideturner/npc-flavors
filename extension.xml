@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="1.0" release="1">
+	<properties>
+		<name>5E Extension - NPC flavors</name>
+		<version>1.0</version>
+		
+		<author>Tideturner</author>
+		<description>Add random flavors to NPC names instead of numbers</description>
+		
+		<ruleset>
+			<name>5E</name>
+		</ruleset>
+	</properties>
+
+	<base>
+        <!-- Strings -->
+        <includefile source="strings/npc_flavors_strings.xml" />
+        <!-- Modified CoreRPG Scripts -->
+        <script name="CombatManager" file="scripts/manager_combat.lua" />
+        <!-- NPC Flavors Scripts -->
+        <script name="NPCFlavorData" file="scripts/npc_flavors_data.lua" />
+        <script name="NPCFlavors" file="scripts/manager_npc_flavors.lua" />
+	</base>
+</root>

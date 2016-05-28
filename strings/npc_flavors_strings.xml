@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root>
+    <string name="npcf_option_group">NPC Flavors</string>
+    <string name="npcf_option_enabled">Enable NPC Flavors</string>
+    <string name="npcf_option_fchance">Chance of NPC with flavor</string>
+    <string name="npcf_option_debug">Show debug output</string>
+
+    <string name="npcf_option_fchance_10">10%</string>
+    <string name="npcf_option_fchance_20">20%</string>
+    <string name="npcf_option_fchance_30">30%</string>
+    <string name="npcf_option_fchance_40">40%</string>
+    <string name="npcf_option_fchance_50">50%</string>
+    <string name="npcf_option_fchance_60">60%</string>
+    <string name="npcf_option_fchance_70">70%</string>
+    <string name="npcf_option_fchance_80">80%</string>
+    <string name="npcf_option_fchance_90">90%</string>
+    <string name="npcf_option_fchance_100">100%</string>
+
+</root>
