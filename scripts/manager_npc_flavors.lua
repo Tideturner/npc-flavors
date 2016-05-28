@@ -8,7 +8,7 @@ function onInit()
 
     OptionsManager.registerOption2("NPCF_FCHANCE", true, "npcf_option_group", "npcf_option_fchance", "option_entry_cycler",
         { labels = "npcf_option_fchance_10|npcf_option_fchance_20|npcf_option_fchance_30|npcf_option_fchance_40|npcf_option_fchance_50|npcf_option_fchance_60|npcf_option_fchance_70|npcf_option_fchance_80|npcf_option_fchance_90|npcf_option_fchance_100",
-            values = "10|20|30|40|50|60|70|80|90|100", baselabel = "npcf_option_fchance_40", baseval = "40", default = "40" });
+            values = "10|20|30|40|50|60|70|80|90|100", baselabel = "npcf_option_fchance_10", baseval = "10", default = "40" });
 
     -- OptionsManager.registerOption2("NPCF_DEBUG", true, "npcf_option_group", "npcf_option_debug", "option_entry_cycler",
     --    { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
@@ -17,7 +17,7 @@ end
 function getFlavorCount( construct )
     local result = 0;
     for count, percent in pairs( construct ) do
-        toChat( '    - pairs ' .. count .. ", " .. percent );
+        chatDebugOutput( '    - pairs ' .. count .. ", " .. percent );
         if math.random( 1, 100 ) > percent then
             break
         end
@@ -61,34 +61,34 @@ function constructFlavor( npcType, npcSubtype1, npcSubtype2 )
     local flavorType = math.random( #NPCFlavorData.FlavorsByType[npcTypeWithFlavor] );
     local table = NPCFlavorData.FlavorsByType[npcTypeWithFlavor][flavorType];
 
-    toChat( " Using " .. flavorType .. " flavor type for " .. npcTypeWithFlavor );
+    chatDebugOutput( " Using " .. flavorType .. " flavor type for " .. npcTypeWithFlavor );
 
     for _, construct in pairs( table.construct ) do
         local constructKey, constructChances = firstTableEntry( construct );
-        toChat( " --- constructKey: " .. constructKey );
+        chatDebugOutput( " --- constructKey: " .. constructKey );
         local c = getFlavorCount( constructChances );
         for i = 1, c , 1 do
             npcFlavor = npcFlavor .. table[constructKey][ math.random( #table[constructKey] ) ] .. " ";
         end
-        toChat( " --- flavor: " .. npcFlavor );
+        chatDebugOutput( " --- flavor: " .. npcFlavor );
     end;
 
     return StringManager.trim( StringManager.capitalize(npcFlavor) );
 end
 
-function toChat( s )
+function chatDebugOutput( s )
     if OptionsManager.getOption("NPCF_DEBUG") == "on" then
         Comm.addChatMessage( {text = s } );
     end
 end
 
 function addNPC(sClass, nodeNPC, sName)
-    toChat( "---------------------" );
+    chatDebugOutput( "---------------------" );
     -- 5E combat manager
     local nodeEntry = CombatManager2.addNPC(sClass, nodeNPC, sName);
 
     if OptionsManager.getOption("NPCF_ENABLED") ~= "on" then
-        toChat("NPC Flavors is disabled: " .. OptionsManager.getOption("NPCF_ENABLED"))
+        chatDebugOutput("NPC Flavors is disabled: " .. OptionsManager.getOption("NPCF_ENABLED"))
         return nodeEntry
     end
 
@@ -102,56 +102,56 @@ function addNPC(sClass, nodeNPC, sName)
     local npcFlavorChanceSuccess = npcFlavorChance >= npcFlavorPercent;
 
     if not canConstructFlavor( npcType ) then
-        toChat("Unsupported NPC type: " .. npcType )
+        chatDebugOutput("Unsupported NPC type: " .. npcType )
         return nodeEntry
     end
 
-    toChat( "Adding NPC: " .. originalNpcName );
-    toChat( "Flavor chance: " .. npcFlavorChance .. " >= " .. npcFlavorPercent );
+    chatDebugOutput( "Adding NPC: " .. originalNpcName );
+    chatDebugOutput( "Flavor chance: " .. npcFlavorChance .. " >= " .. npcFlavorPercent );
     if not npcHasFlavor(originalNpcName) then
 
         if combatTrackerHasOthersOfSameName(nodeEntry) then
-            toChat( "NPC has company" )
-            toChat( "Type: " .. npcType );
+            chatDebugOutput( "NPC has company" )
+            chatDebugOutput( "Type: " .. npcType );
             if npcFlavorChanceSuccess then
-                if npcSubtype1 then toChat( "Subtype 1: " .. npcSubtype1 ); end
-                if npcSubtype2 then toChat( "Subtype 2: " .. npcSubtype2 ); end
+                if npcSubtype1 then chatDebugOutput( "Subtype 1: " .. npcSubtype1 ); end
+                if npcSubtype2 then chatDebugOutput( "Subtype 2: " .. npcSubtype2 ); end
 
                 local npcFlavor = constructFlavor( npcType, npcSubtype1, npcSubtype2 );
                 finalNpcName =  originalNpcName .. " (" .. npcFlavor .. ")";
                 setNpcFlavor = true;
             else
-                toChat( "NPC didn't make the cut. No flavor will be applied")
+                chatDebugOutput( "NPC didn't make the cut. No flavor will be applied")
             end
 
             -- If a first of this NPC type exist, go back rename that too
             --  if the chance is a success
             if npcFirstOfItsKind[nodeNpcType] then
-                toChat( "   /------------" );
-                toChat( "    Checking first of its kind (" .. nodeNpcType .. ")" );
+                chatDebugOutput( "   /------------" );
+                chatDebugOutput( "    Checking first of its kind (" .. nodeNpcType .. ")" );
                 if tonumber( OptionsManager.getOption("NPCF_FCHANCE") ) >= math.random(1,100) then
                     local npcFirstOfItsKindFlavor = originalNpcName .. " (" .. constructFlavor( npcType, npcSubtype1, npcSubtype2 ) .. ")";
                     DB.setValue( npcFirstOfItsKind[nodeNpcType], "name", "string", npcFirstOfItsKindFlavor )
-                    toChat( "    Renamed (First of its kind) " .. npcFirstOfItsKindFlavor .. " (was " .. originalNpcName .. ") of type '" .. npcType .. "' to the combat tracker" );
+                    chatDebugOutput( "    Renamed (First of its kind) " .. npcFirstOfItsKindFlavor .. " (was " .. originalNpcName .. ") of type '" .. npcType .. "' to the combat tracker" );
                 else
-                    toChat( "    First of its kind didn't make the cut")
+                    chatDebugOutput( "    First of its kind didn't make the cut")
                 end
-                toChat( "   /------------" );
+                chatDebugOutput( "   /------------" );
                 -- Unset, not need to check again
                 npcFirstOfItsKind[nodeNpcType] = nil;
             end
 
         else
-            toChat( "NPC is all alone in the dark" )
+            chatDebugOutput( "NPC is all alone in the dark" )
         end
 
     else
-        toChat( "NPC already has a flavor. Skipping" );
+        chatDebugOutput( "NPC already has a flavor. Skipping" );
     end
 
     if setNpcFlavor then
         DB.setValue( nodeEntry, "name", "string", finalNpcName )
-        toChat( "Renamed " .. finalNpcName .. " (was " .. originalNpcName .. ") of type '" .. npcType .. "' to the combat tracker" );
+        chatDebugOutput( "Renamed " .. finalNpcName .. " (was " .. originalNpcName .. ") of type '" .. npcType .. "' to the combat tracker" );
     end
 
     return nodeEntry;
@@ -207,12 +207,12 @@ function npcGetType(s)
 end
 
 function npcHasFlavor(s)
-    toChat( "Checking for flavor" );
+    chatDebugOutput( "Checking for flavor" );
     local nStarts, _, sNumber = string.find(s, " ?(%([a-z -A-Z]+%)) ?%d?$");
     if nStarts then
-        toChat( "NPC has flavor: " .. sNumber );
+        chatDebugOutput( "NPC has flavor: " .. sNumber );
         return true
     end
-    toChat( "NPC does not have flavor" );
+    chatDebugOutput( "NPC does not have flavor" );
     return false;
 end
