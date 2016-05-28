@@ -1,8 +1,6 @@
-local npcCustomAddNPC = nil;
 local npcFirstOfItsKind = {};
 
 function onInit()
-    npcCustomAddNPC = CombatManager.getCustomAddNPC();
     CombatManager.setCustomAddNPC(addNPC);
 
     OptionsManager.registerOption2("NPCF_ENABLED", true, "npcf_option_group", "npcf_option_enabled", "option_entry_cycler",
@@ -80,25 +78,14 @@ end
 
 function toChat( s )
     if OptionsManager.getOption("NPCF_DEBUG") == "on" then
-        -- Comm.addChatMessage( {text = s } );
+        Comm.addChatMessage( {text = s } );
     end
-end
-
-function fireOriginalAddNpc(sClass, nodeNPC, sName)
-    if (npcCustomAddNPC) then
-        toChat( "Calling original 5E function" );
-        nodeEntry = npcCustomAddNPC(sClass, nodeNPC, sName)
-    else
-        toChat( "5E addNPC not available / later in chain" );
-        nodeEntry, _ = CombatManager.addNPCHelper(nodeNPC, sName)
-    end
-
-    return nodeEntry
 end
 
 function addNPC(sClass, nodeNPC, sName)
     toChat( "---------------------" );
-    local nodeEntry = fireOriginalAddNpc(sClass, nodeNPC, originalNpcName);
+    -- 5E combat manager
+    local nodeEntry = CombatManager2.addNPC(sClass, nodeNPC, sName);
 
     if OptionsManager.getOption("NPCF_ENABLED") ~= "on" then
         toChat("NPC Flavors is disabled: " .. OptionsManager.getOption("NPCF_ENABLED"))
