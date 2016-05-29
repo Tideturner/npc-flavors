@@ -2,6 +2,7 @@
 <root>
     <string name="npcf_option_group">NPC Flavors</string>
     <string name="npcf_option_enabled">Enable NPC Flavors</string>
+    <string name="npcf_option_5etypes">Flavors by NPC type (5E only)</string>
     <string name="npcf_option_fchance">Chance of NPC with flavor</string>
     <string name="npcf_option_debug">Show debug output</string>
 

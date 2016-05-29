@@ -11,6 +11,9 @@ local constructPS2 = {
     {prefix = { 30 }},
     {suffix = { 100 }}
 };
+local constructSOLO = {
+    {solo = { 100 }}
+};
 
 local tColors = {
     "red", "orange", "yellow", "green", "blue", "indigo", "violet", "purple", "magenta",
@@ -119,7 +122,7 @@ Flavors = {
         }
     },
     ["fur"] = {
-        construct = { {prefix = { 100, 30 }}, {suffix = { 100 }} },
+        construct = constructPS,
         prefix = {
             "dirty", "filthy", "clean", "mangled", "long", "short", "stubby", "dazzling", "enormous", "miniscule",
             "painted", "ugly", "beautiful", "missing", "withered",
@@ -129,6 +132,14 @@ Flavors = {
         color = tColors,
         suffix = {
             "fur", "hide", "mane", "mop", "shock", "bristles", "locks", "fuzz", "thatch", "wool", "pelt"
+        }
+    },
+    ["characteristic"] = {
+        construct = constructSOLO,
+        solo = {
+            "piercing eyes", "glazed eyes", "wild eyes", "crazed eyes", "bloodshot eyes", "cross eyed", "pointy ears", "big ears", "torn ear",
+            "hairy ears", "pierces ears", "bushy eyebrows", "big nose", "flat nose", "broken nose", "pierced nose", "scarred cheek", "scarred face",
+            "scarred neck", "scarred hands", "scarred arms", "scarred chin"
         }
     }
 }

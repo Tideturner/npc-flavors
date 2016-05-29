@@ -6,6 +6,9 @@ function onInit()
     OptionsManager.registerOption2("NPCF_ENABLED", true, "npcf_option_group", "npcf_option_enabled", "option_entry_cycler",
         { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
 
+    OptionsManager.registerOption2("NPCF_5ETYPES", true, "npcf_option_group", "npcf_option_5etypes", "option_entry_cycler",
+        { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
+
     OptionsManager.registerOption2("NPCF_FCHANCE", true, "npcf_option_group", "npcf_option_fchance", "option_entry_cycler",
         { labels = "npcf_option_fchance_10|npcf_option_fchance_20|npcf_option_fchance_30|npcf_option_fchance_40|npcf_option_fchance_50|npcf_option_fchance_60|npcf_option_fchance_70|npcf_option_fchance_80|npcf_option_fchance_90|npcf_option_fchance_100",
             values = "10|20|30|40|50|60|70|80|90|100", baselabel = "npcf_option_fchance_10", baseval = "10", default = "40" });
@@ -27,8 +30,17 @@ function getFlavorCount( construct )
     return result;
 end
 
+function getTypeByOption( npcType, npcSubtype1, npcSubtype2 )
+    if OptionsManager.getOption("NPCF_5ETYPES") == "on" then
+        return  npcType, npcSubtype1, npcSubtype2;
+    end
+
+    return "humanoid", nil, nil;
+end
+
 function getSupportedNPCType( npcType, npcSubtype1, npcSubtype2 )
     local npcTypeWithFlavor;
+    npcType, npcSubtype1, npcSubtype2 = getTypeByOption( npcType, npcSubtype1, npcSubtype2 );
 
     npcTypeWithFlavor = StringManager.combine( ".", npcType, npcSubtype1, npcSubtype2 );
     if NPCFlavorData.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor end;
@@ -82,10 +94,21 @@ function chatDebugOutput( s )
     end
 end
 
+function addNPCOriginal(sClass, nodeNPC, sName)
+    local nodeEntry;
+    if CombatManager2.addNPC then
+        nodeEntry = CombatManager2.addNPC(sClass, nodeNPC, sName);
+    else
+        nodeEntry = CombatManager.addNPCHelper(nodeNPC, sName);
+    end;
+
+    return nodeEntry;
+end
+
 function addNPC(sClass, nodeNPC, sName)
     chatDebugOutput( "---------------------" );
     -- 5E combat manager
-    local nodeEntry = CombatManager2.addNPC(sClass, nodeNPC, sName);
+    local nodeEntry = addNPCOriginal(sClass, nodeNPC, sName);
 
     if OptionsManager.getOption("NPCF_ENABLED") ~= "on" then
         chatDebugOutput("NPC Flavors is disabled: " .. OptionsManager.getOption("NPCF_ENABLED"))
