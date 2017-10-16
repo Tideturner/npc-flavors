@@ -1,0 +1,7 @@
+"anchor beard", "beard", "beard", "bristles", "burnsides", "chin curtain", "chin whiskers",
+"chinstrap beard", "chops", "crumb catcher", "eyebrows", "facial hair", "full beard",
+"goatee", "hair", "handlebar mustache", "horseshoe moustache", "jawline beard", "lip hair",
+"locks", "moustache", "moustache", "moustache ends", "moustache points", "muttonchops",
+"nose bristles", "pencil moustache", "side burns", "soul patch", "spade beard", "tuff scruff",
+"tuft", "walrus moustache", "whiskers"
+"hair", "moustache", "beard"

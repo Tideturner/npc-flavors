@@ -1,0 +1,7 @@
+"red", "orange", "yellow", "green", "blue", "indigo", "violet", "purple", "magenta",
+"cyan", "pink", "brown", "white", "gray", "black"
+    "red", "orange", "yellow", "green", "blue", "indigo", "violet", "purple", "magenta",
+    "cyan", "pink", "brown", "white", "gray", "black", "alabaster","amber","aqua","lime green",
+	"azure","baby blue","turquoise","lavender","maroon","burgundy","burnt sienna","charcoal",
+	"chartreuse","cream","crimson","cyan","khaki","peach","nude-colored","ebony","fuchsia","indigo",
+	 "beige","periwinkle","lilac","mauve","taupe","olive drab","pale blue","pastel"

@@ -1,0 +1,9 @@
+"bandanna", "beret", "blazer", "blouse", "bra", "breeches", "cap", "cape", "cardigan", "cloak", "cravat", "coat",
+"corset", "doublet", "dress", "dress shirt", "eye patch", "greatcoat", "gown", "hat", "helmet", "jacket", "jerkin",
+"leggings", "oilskin", "outerwear", "pajamas", "panties", "pants", "robe", "sash", "scarf", "shirt", "shorts",
+"skirt", "slacks", "socks", "stockings", "suit", "suspenders", "sweater", "tie", "top", "top hat", "trousers",
+"tunic", "turban", "undershirt", "underwear", "undies", "vest"
+
+"bandanna", "hat", "scarf", "shirt", "cape", "v-neck", "robe", "cloak", "socks", "jacket",
+            "coat", "jockstrap", "eye patch", "trousers", "sash", "turban", "beret", "cap", "helmet", "top hat",
+            "shoes", "greatcoat", "vest", "chaps", "codpiece", "gloves", "leotard", "overcoat", "tights", "tunic"

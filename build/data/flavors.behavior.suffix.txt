@@ -1,0 +1,6 @@
+"laughter", "smile", "frown", "grin", "attitude", "scream", "lisp",
+"gait", "jaunt", "saunter", "stride", "footwork", "legwork", "stroll", "walk",
+"chuckle", "chort", "guffaw", "giggle", "titter", "snigger", "howl"
+"laughter", "smile", "frown", "grin", "attitude", "scream", "lisp",
+            "gait", "jaunt", "saunter", "stride", "footwork", "legwork", "stroll",
+			"walk", "demeanor", "voice"

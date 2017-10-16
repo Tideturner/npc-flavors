@@ -1,0 +1,2 @@
+"strangely", "unusually", "very", "obscenely", "noticably"
+"strangely", "unusually", "very", "obscenely", "noticably", "pleasently", "oddly","shockingly", "attractively"

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<root version="1.0" release="1">
+<root version="3.0">
 	<properties>
 		<name>5E Extension - NPC flavors</name>
-		<version>1.0</version>
+		<version>1.1</version>
 		
 		<author>Tideturner</author>
 		<description>Add random flavors to NPC names in the combat tracker</description>
 
 	</properties>
 
-	<base>
+    <announcement text="NPC flavors v1.1\n- by Tideturner (Over-processed bristles)"/>
+
+    <base>
         <!-- Strings -->
         <includefile source="strings/npc_flavors_strings.xml" />
         <!-- NPC Flavors Scripts -->
