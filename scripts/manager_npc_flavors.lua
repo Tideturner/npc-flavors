@@ -1,20 +1,31 @@
 local npcFirstOfItsKind = {};
+local currentRuleset;
+local debugFlavors = false;
 
 function onInit()
-    CombatManager.setCustomAddNPC(addNPC);
+    currentRuleset = User.getRulesetName();
 
     OptionsManager.registerOption2("NPCF_ENABLED", true, "npcf_option_group", "npcf_option_enabled", "option_entry_cycler",
         { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
 
-    OptionsManager.registerOption2("NPCF_5ETYPES", true, "npcf_option_group", "npcf_option_5etypes", "option_entry_cycler",
-        { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
+    if currentRuleset == "PFRPG" or currentRuleset == "5E" then
+        OptionsManager.registerOption2("NPCF_BY_TYPES", true, "npcf_option_group", "npcf_option_by_types", "option_entry_cycler",
+            { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
+    end
 
     OptionsManager.registerOption2("NPCF_FCHANCE", true, "npcf_option_group", "npcf_option_fchance", "option_entry_cycler",
         { labels = "npcf_option_fchance_10|npcf_option_fchance_20|npcf_option_fchance_30|npcf_option_fchance_40|npcf_option_fchance_50|npcf_option_fchance_60|npcf_option_fchance_70|npcf_option_fchance_80|npcf_option_fchance_90|npcf_option_fchance_100",
             values = "10|20|30|40|50|60|70|80|90|100", baselabel = "npcf_option_fchance_10", baseval = "10", default = "40" });
 
-    -- OptionsManager.registerOption2("NPCF_DEBUG", true, "npcf_option_group", "npcf_option_debug", "option_entry_cycler",
-    --     { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
+    if debugFlavors then
+        OptionsManager.registerOption2("NPCF_DEBUG", true, "npcf_option_group", "npcf_option_debug", "option_entry_cycler",
+            { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
+    end
+
+end
+
+function isEnabled()
+    return OptionsManager.getOption("NPCF_ENABLED") == "on";
 end
 
 function getFlavorCount( construct )
@@ -32,7 +43,7 @@ function getFlavorCount( construct )
 end
 
 function getTypeByOption( npcType, npcSubtype1, npcSubtype2 )
-    if OptionsManager.getOption("NPCF_5ETYPES") == "on" then
+    if OptionsManager.getOption("NPCF_BY_TYPES") == "on" then
         return  npcType, npcSubtype1, npcSubtype2;
     end
 
@@ -98,30 +109,21 @@ function chatDebugOutput( s )
     end
 end
 
-function addNPCOriginal(sClass, nodeNPC, sName)
-    local nodeEntry;
-    if CombatManager2.addNPC then
-        nodeEntry = CombatManager2.addNPC(sClass, nodeNPC, sName);
-    else
-        nodeEntry = CombatManager.addNPCHelper(nodeNPC, sName);
-    end;
-
-    return nodeEntry;
+function prepareForBattle()
+    npcFirstOfItsKind = {}
 end
 
-function addNPC(sClass, nodeNPC, sName)
+function renameNPC( nodeEntry )
     chatDebugOutput( "---------------------" );
     -- 5E combat manager
-    local nodeEntry = addNPCOriginal(sClass, nodeNPC, sName);
 
     if OptionsManager.getOption("NPCF_ENABLED") ~= "on" then
         chatDebugOutput("NPC Flavors is disabled: " .. OptionsManager.getOption("NPCF_ENABLED"))
         return nodeEntry
     end
 
-    local nodeNpcType = StringManager.trim(DB.getValue(nodeNPC, "type", ""));
-    local npcType, npcSubtype1, npcSubtype2 = npcGetType(StringManager.trim(DB.getValue(nodeNPC, "type", "")));
-    local originalNpcName = StringManager.trim(DB.getValue(nodeNPC, "name", ""));
+    local npcType, npcSubtype1, npcSubtype2 = npcGetType(StringManager.trim(DB.getValue(nodeEntry, "type", "")));
+    local originalNpcName = stripNpcFlavorAndNumber( StringManager.trim(DB.getValue(nodeEntry, "name", "")) );
     local finalNpcName = "";
     local setNpcFlavor = false;
     local npcFlavorChance = tonumber( OptionsManager.getOption("NPCF_FCHANCE") );
@@ -140,7 +142,7 @@ function addNPC(sClass, nodeNPC, sName)
     chatDebugOutput( "Flavor chance: " .. npcFlavorChance .. " >= " .. npcFlavorPercent );
     if not npcHasFlavor(originalNpcName) then
 
-        if combatTrackerHasOthersOfSameName(nodeEntry) then
+        if combatTrackerHasOthersOfSameName(originalNpcName, nodeEntry) then
             chatDebugOutput( "NPC has company" )
             chatDebugOutput( "Type: " .. npcType );
             if npcFlavorChanceSuccess then
@@ -167,7 +169,7 @@ function addNPC(sClass, nodeNPC, sName)
                     chatDebugOutput( "    First of its kind didn't make the cut")
                 end
                 chatDebugOutput( "   /------------" );
-                -- Unset, not need to check again
+                -- Unset, no need to check again
                 npcFirstOfItsKind[originalNpcName] = nil;
             end
 
@@ -187,9 +189,7 @@ function addNPC(sClass, nodeNPC, sName)
     return nodeEntry;
 end
 
-function combatTrackerHasOthersOfSameName( nodeNPC )
-    local sName = StringManager.trim(DB.getValue(nodeNPC, "name", ""));
-    local nodeNpcType = StringManager.trim(DB.getValue(nodeNPC, "type", ""));
+function combatTrackerHasOthersOfSameName( sName, nodeEntry )
     sName = stripNpcFlavorAndNumber(sName);
     local foundCount = 0;
 
@@ -202,7 +202,8 @@ function combatTrackerHasOthersOfSameName( nodeNPC )
     end
 
     if foundCount == 1 then
-        npcFirstOfItsKind[sName] = nodeNPC;
+        chatDebugOutput(' --- Adding '.. sName ..' as first of its kind.')
+        npcFirstOfItsKind[sName] = nodeEntry;
     end
 
     return foundCount > 1;
@@ -225,12 +226,29 @@ function stripNpcFlavorAndNumber( s )
 end
 
 function npcGetType(s)
-    if s:find("%(") then
-        local type, subtype = s:match( "(.+) %((.+)%)");
-        if subtype:find(", ") then
-            return type, subtype:match( "(.+), (.+)");
+    if currentRuleset == "PFRPG" then
+        if s:find("%(") then
+            local _, _, type, subtype = s:match( "(.+) (.+) (.+) %((.+)%)");
+
+            if subtype:find(", ") then
+                return type, subtype:match( "(%a+),%s(%a+)");
+            end
+
+            return type, subtype;
+        else
+            local _, _, type = s:match( "(.+) (.+) (.+)");
+            return type;
         end
-        return type, subtype;
+    end
+
+    if currentRuleset == "5E" then
+        if s:find("%(") then
+            local type, subtype = s:match( "(.+) %((.+)%)");
+            if subtype:find(", ") then
+                return type, subtype:match( "(.+), (.+)");
+            end
+            return type, subtype;
+        end
     end
 
     return s;
