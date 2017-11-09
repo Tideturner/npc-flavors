@@ -21,7 +21,6 @@ function onInit()
         OptionsManager.registerOption2("NPCF_DEBUG", true, "npcf_option_group", "npcf_option_debug", "option_entry_cycler",
             { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
     end
-
 end
 
 function isEnabled()
@@ -55,13 +54,16 @@ function getSupportedNPCType( npcType, npcSubtype1, npcSubtype2 )
     npcType, npcSubtype1, npcSubtype2 = getTypeByOption( npcType, npcSubtype1, npcSubtype2 );
 
     npcTypeWithFlavor = StringManager.combine( ".", npcType, npcSubtype1, npcSubtype2 );
-    if NPCFlavorData.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor end;
+    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
+    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
     npcTypeWithFlavor = StringManager.combine( ".", npcType, npcSubtype1 );
-    if NPCFlavorData.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor end;
+    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
+    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
     npcTypeWithFlavor = npcType;
-    if NPCFlavorData.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor end;
+    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
+    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
     return nul;
 end;
@@ -78,15 +80,15 @@ function firstTableEntry( table )
 end
 
 function constructFlavor( npcType, npcSubtype1, npcSubtype2 )
-    local npcTypeWithFlavor = getSupportedNPCType( npcType, npcSubtype1, npcSubtype2 );
+    local npcTypeWithFlavor, npcTypeWithFlavorName = getSupportedNPCType( npcType, npcSubtype1, npcSubtype2 );
     if not npcTypeWithFlavor then return "" end;
 
     local npcFlavor = "";
     local npcFlavorDebug = "";
-    local flavorType = math.random( #NPCFlavorData.FlavorsByType[npcTypeWithFlavor] );
-    local table = NPCFlavorData.FlavorsByType[npcTypeWithFlavor][flavorType];
+    local flavorType = math.random( #NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] );
+    local table = NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor][flavorType];
 
-    chatDebugOutput( " Using flavor type " .. flavorType .. " for " .. npcTypeWithFlavor );
+    chatDebugOutput( " Using flavor type " .. flavorType .. " (".. npcTypeWithFlavorName ..") " .. " for " .. npcTypeWithFlavor );
 
     for _, construct in pairs( table.construct ) do
         local constructKey, constructChances = firstTableEntry( construct );
@@ -132,7 +134,7 @@ function renameNPC( nodeEntry )
 
     chatDebugOutput( "Adding NPC: " .. originalNpcName );
 
-    if not canConstructFlavor( npcType ) then
+    if not canConstructFlavor( npcType, npcSubtype1, npcSubtype2 ) then
         chatDebugOutput("Unsupported NPC type: " .. npcType );
         chatDebugOutput(" - full NPC type: " .. StringManager.combine( ".", npcType, npcSubtype1, npcSubtype2 ) );
         return nodeEntry

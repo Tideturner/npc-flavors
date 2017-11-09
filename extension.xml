@@ -2,7 +2,7 @@
 <root version="3.0">
 	<properties>
 		<name>5E Extension - NPC flavors</name>
-		<version>1.1</version>
+		<version>1.2</version>
 		
 		<author>Tideturner</author>
 		<description>Add random flavors to NPC names in the combat tracker</description>
@@ -10,7 +10,7 @@
         <loadorder>1</loadorder>
 	</properties>
 
-    <announcement text="NPC flavors v1.1\n- by Tideturner (Over-processed bristles)"/>
+    <announcement text="NPC flavors v1.2\n- by Tideturner (mangled pencil moustache)"/>
 
     <base>
         <!-- Strings -->
@@ -18,6 +18,7 @@
         <!-- NPC Flavors Scripts -->
         <script name="CombatManagerOverride" file="scripts/manager_combat_override.lua" />
         <script name="NPCFlavorData" file="scripts/npc_flavors_data.lua" />
+        <script name="NPCFlavorDataNpcTypes" file="scripts/npc_flavors_by_npctypes.lua" />
         <script name="NPCFlavors" file="scripts/manager_npc_flavors.lua" />
 	</base>
 </root>

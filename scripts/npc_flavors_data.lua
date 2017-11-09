@@ -142,7 +142,7 @@ Flavors = {
              "abominable", "abusive", "accepting", "accommodating", "accusatory", "adulterous", "aggressive", "agitated",
              "agonizing", "alarmed", "alcoholic", "amazed", "amused", "angry", "annoying", "antagonistic", "anxious",
              "apathetic", "apologetic", "apprehensive", "argumentative", "arrogant", "ashamed", "astonished", "astounded",
-             "at fault", "atrocious", "attentive", "aweful", "awful", "backstabbing", "bad", "bat-shit crazy", "begging you",
+             "at fault", "atrocious", "attentive", "aweful", "awful", "backstabbing", "bad", "bat-shit crazy", "begging",
              "beyond reproach", "bitchy", "bitter", "blameworthy", "blase", "bold", "boring", "bothered", "brainless", "brave",
              "brokenhearted", "calculating", "callous", "calm", "capable", "careless", "casual", "caught", "caught-in-the-act",
              "caught red-handed", "caustic", "charming", "chauvinistic", "cheap", "cheating", "cheerful", "cheery", "childish",
@@ -223,26 +223,5 @@ Flavors = {
              "scarred arms", "scarred cheek", "scarred chin", "scarred face", "scarred hands", "scarred neck", "torn ear",
              "wild eyes"
         }
-    }
-}
-
-FlavorsByType = {
-    ["humanoid"] = {
-        Flavors.clothing,
-        Flavors.bodyparts,
-        Flavors.hair,
-        Flavors.build,
-        Flavors.behavior
-    },
-    ["humanoid.gnoll"] = {
-        Flavors.clothing,
-        Flavors.bodyparts,
-        Flavors.fur,
-        Flavors.behavior
-    },
-    ["humanoid.human.shapechanger"] = {
-        Flavors.clothing,
-        Flavors.bodyparts,
-        Flavors.fur
     }
 }

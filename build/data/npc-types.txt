@@ -1,0 +1,467 @@
+Kobold:humanoid.kobold
+Ancient Copper Dragon:dragon
+Ghost:undead
+Adult White Dragon:dragon
+Giant Ape:beast
+Druid:humanoid.any race
+Hezrou:fiend.demon
+Acolyte:humanoid.any race
+Ghast:undead
+Ancient Blue Dragon:dragon
+Manticore:monstrosity
+Black Bear:beast
+Manes:fiend.demon
+Animated Armor:construct
+Kraken:monstrosity.titan
+Assassin:humanoid.any race
+Lamia:monstrosity
+Ancient Green Dragon:dragon
+Zombie:undead
+Wolf:beast
+Warhorse:beast
+Giant Fire Beetle:beast
+Tiger:beast
+Allosaurus:beast
+Sprite:fey
+Skeleton:undead
+Riding Horse:beast
+Reef Shark:beast
+Grell:aberration
+Raven:beast
+Drow Elite Warrior:humanoid.elf
+Rat:beast
+Quasit:fiend.demon.shapechanger
+Pseudodragon:dragon
+Poisonous Snake:beast
+Hobgoblin Warlord:humanoid.goblinoid
+Panther:beast
+Dust Mephit:elemental
+Owl:beast
+Mule:beast
+Mastiff:beast
+Lion:beast
+Half-Red Dragon Veteran:humanoid.human
+Imp:fiend.devil.shapechanger
+Ancient Bronze Dragon:dragon
+Hawk (Falcon):beast
+Giant Spider:beast
+Giant Eagle:beast
+Frog:beast
+Hawk:beast
+Dire Wolf:beast
+Commoner:humanoid.any race
+Crocodile:beast
+Constrictor Snake:beast
+Cat:beast
+Brown Bear:beast
+Gorgon:monstrosity
+Boar:beast
+Darkmantle:monstrosity
+Black Bear:beast
+Bat:beast
+Zombie:undead
+Yuan-ti Pureblood:humanoid.yuan-ti
+Kuo-toa:humanoid.kuo-toa
+Yuan-ti Malison:monstrosity.shapechanger.yuan-ti
+Dao:elemental
+Yuan-ti Abomination:monstrosity.shapechanger.yuan-ti
+Young White Dragon:dragon
+Young Silver Dragon:dragon
+Young Remorhaz:monstrosity
+Green Dragon Wyrmling:dragon
+Young Red Shadow Dragon:dragon
+Carrion Crawler:monstrosity
+Young Red Dragon:dragon
+Young Green Dragon:dragon
+Young Gold Dragon:dragon
+Young Copper Dragon:dragon
+Imp:fiend.devil.shapechanger
+Young Bronze Dragon:dragon
+Bone Devil:fiend.devil
+Young Brass Dragon:dragon
+Young Blue Dragon:dragon
+Young Black Dragon:dragon
+Yochlol:fiend.demon.shapechanger
+Guardian Naga:monstrosity
+Yeti:monstrosity
+Deer:beast
+Xorn:elemental
+Wyvern:dragon
+Wraith:undead
+Worg:monstrosity
+Ice Devil:fiend.devil
+Wolf:beast
+Djinni:elemental
+Winter Wolf:monstrosity
+Winged Kobold:humanoid.kobold
+Will-o'-Wisp:undead
+Wight:undead
+Hook Horror:monstrosity
+White Dragon Wyrmling:dragon
+Deva:celestial
+Werewolf:humanoid.human.shapechanger
+Weretiger:humanoid.human.shapechanger
+Wererat:humanoid.human.shapechanger
+Wereboar:humanoid.human.shapechanger
+Hobgoblin:humanoid.goblinoid
+Werebear:humanoid.human.shapechanger
+Clay Golem:construct
+Weasel:beast
+Water Weird:elemental
+Water Elemental:elemental
+Warhorse Skeleton:undead
+Goat:beast
+Warhorse:beast
+Cambion:fiend
+Vulture:beast
+Vrock:fiend.demon
+Violet Fungus:plant
+Vine Blight:plant
+Lion:beast
+Veteran:humanoid.any race
+Death Dog:monstrosity
+Vampire Warrior:undead.shapechanger
+Vampire Spellcaster:undead.shapechanger
+Vampire Spawn:undead
+Vampire:undead.shapechanger
+Invisible Stalker:elemental
+Unicorn:celestial
+Crocodile:beast
+Umber Hulk:monstrosity
+Ultroloth:fiend.yugoloth
+Tyrannosaurus Rex:beast
+Twig Blight:plant
+Iron Golem:construct
+Troll:giant
+Ancient Gold Dragon:dragon
+Troglodyte:humanoid.troglodyte
+Tridrone:construct
+Triceratops:beast
+Tribal Warrior:humanoid.any race
+Hell Hound:fiend
+Treant:plant
+Drow Priestess of Lolth:humanoid.elf
+Tiger:beast
+Thug:humanoid.any race
+Thri-kreen:humanoid.thri-kreen
+Tarrasque:monstrosity.titan
+Hobgoblin Captain:humanoid.goblinoid
+Swarm of Ravens:swarm of Tiny beasts
+Earth Elemental:elemental
+Swarm of Rats:swarm of Tiny beasts
+Swarm of Quippers:swarm of Tiny beasts
+Swarm of Poisonous Snakes:swarm of Tiny beasts
+Swarm of Insects:swarm of Tiny beasts
+Horned Devil:fiend.devil
+Swarm of Bats:swarm of Tiny beasts
+Dire Wolf:beast
+Succubus:fiend.shapechanger
+Storm Giant:giant
+Stone Golem:construct
+Stone Giant:giant
+Homunculus:construct
+Stirge:beast
+Blue Dragon Wyrmling:dragon
+Steam Mephit:elemental
+Spy:humanoid.any race
+Sprite:fey
+Spirit Naga:monstrosity
+Goristro:fiend.demon
+Spined Devil:fiend.devil
+Barbed Devil:fiend.devil
+Spider:beast
+Specter:undead
+Spectator:aberration
+Solar:celestial
+Incubus:fiend.shapechanger
+Smoke Mephit:elemental
+Ancient Silver Dragon:dragon
+Slaad Tadpole:aberration
+Skeleton:undead
+Silver Dragon Wyrmling:dragon
+Shrieker:plant
+Intellect Devourer:aberration
+Shield Guardian:construct
+Balor:fiend.demon
+Shambling Mound:plant
+Shadow Demon:fiend.demon
+Shadow:undead
+Sea Horse:beast
+Lemure:fiend.devil
+Sea Hag:fey
+Awakened Tree:plant
+Scout:humanoid.any race
+Scorpion:beast
+Scarecrow:construct
+Satyr:fey
+Kuo-toa Whip:humanoid.kuo-toa
+Salamander:elemental
+Adult Gold Dragon:dragon
+Sahuagin Priestess:humanoid.sahuagin
+Sahuagin Baron:humanoid.sahuagin
+Sahuagin:humanoid.sahuagin
+Saber-Toothed Tiger:beast
+Green Slaad:aberration.shapechanger
+Rust Monster:monstrosity
+Dretch:fiend.demon
+Rug of Smothering:construct
+Roper:monstrosity
+Roc:monstrosity
+Riding Horse:beast
+Hill Giant:giant
+Rhinoceros:beast
+Draft Horse:beast
+Revenant:undead
+Remorhaz:monstrosity
+Reef Shark:beast
+Red Slaad:aberration
+Minotaur Skeleton:undead
+Red Dragon Wyrmling:dragon
+Chasme:fiend.demon
+Raven:beast
+Rat:beast
+Rakshasa:fiend
+Quipper:beast
+Giant Sea Horse:beast
+Quasit:fiend.demon.shapechanger
+Basilisk:monstrosity
+Quaggoth Spore Servant:plant
+Quaggoth:humanoid.quaggoth
+Quadrone:construct
+Purple Worm:monstrosity
+Lizardfolk:humanoid.lizardfolk
+Pteranodon:beast
+Frost Giant:giant
+Pseudodragon:dragon
+Priest:humanoid.any race
+Pony:beast
+Poltergeist:undead
+Giant Weasel:beast
+Polar Bear:beast
+Banshee:undead
+Poisonous Snake:beast
+Plesiosaurus:beast
+Planetar:celestial
+Pixie:fey
+Gnoll Pack Lord:humanoid.gnoll
+Pit Fiend:fiend.devil
+Badger:beast
+Piercer:monstrosity
+Phase Spider:monstrosity
+Peryton:monstrosity
+Pentadrone:construct
+Lizard:beast
+Pegasus:celestial
+Empyrean:celestial.titan
+Panther:beast
+Owlbear:monstrosity
+Owl:beast
+Otyugh:aberration
+Grick Alpha:monstrosity
+Orog:humanoid.orc
+Adult Blue Dragon:dragon
+Orc War Chief:humanoid.orc
+Orc Eye of Gruumsh:humanoid.orc
+Orc:humanoid.orc
+Oni:giant
+Half-Ogre:giant
+Ogre Zombie:undead
+Adult Bronze Dragon:dragon
+Ogre:giant
+Octopus:beast
+Ochre Jelly:ooze
+Nycaloth:fiend.yugoloth
+Griffon:monstrosity
+Nothic:aberration
+Beholder Zombie:undead
+Noble:humanoid.any race
+Nightmare:fiend
+Night Hag:fiend
+Needle Blight:plant
+Giant Vulture:beast
+Nalfeshnee:fiend.demon
+Ankheg:monstrosity
+Magmin:elemental
+Myconid Sovereign:plant
+Myconid Adult:plant
+Mummy Lord:undead
+Githzerai Monk:humanoid.gith
+Mummy:undead
+Bandit:humanoid.any race
+Mule:beast
+Mud Mephit:elemental
+Monodrone:construct
+Minotaur:monstrosity
+Knight:humanoid.any race
+Mind Flayer Arcanist:aberration
+Ancient White Dragon:dragon
+Mind Flayer:aberration
+Mimic:monstrosity.shapechanger
+Mezzoloth:fiend.yugoloth
+Merrow:monstrosity
+Ice Mephit:elemental
+Merfolk:humanoid.merfolk
+Flying Snake:beast
+Medusa:monstrosity
+Mastiff:beast
+Marilith:fiend.demon
+Marid:elemental
+Lizard King/Queen:humanoid.lizardfolk
+Cockatrice:monstrosity
+Diseased Giant Rat:beast
+Bat:beast
+Behir:monstrosity
+Grick:monstrosity
+Kuo-toa Monitor:humanoid.kuo-toa
+Hunter Shark:beast
+Centaur:monstrosity
+Dryad:fey
+Elephant:beast
+Blink Dog:fey
+Giant Frog:beast
+Mammoth:beast
+Myconid Sprout:plant
+Crab:beast
+Deep Gnome (Svirfneblin):humanoid.gnome
+Giant Bat:beast
+Archmage:humanoid.any race
+Gargoyle:elemental
+Fire Giant:giant
+Grimlock:humanoid.grimlock
+Chain Devil:fiend.devil
+Ettin:giant
+Duergar:humanoid.dwarf
+Barlgura:fiend.demon
+Giant Rat:beast
+Githyanki Warrior:humanoid.gith
+Gnoll Fang of Yeenoghu:fiend.gnoll
+Elk:beast
+Chimera:monstrosity
+Doppelganger:monstrosity.shapechanger
+Awakened Shrub:plant
+Fomorian:giant
+Gray Slaad:aberration.shapechanger
+Glabrezu:fiend.demon
+Couatl:celestial
+Bulette:monstrosity
+Abominable Yeti:monstrosity
+Lizardfolk Shaman:humanoid.lizardfolk
+Gladiator:humanoid.any race
+Aboleth:aberration
+Kenku:humanoid.kenku
+Ankylosaurus:beast
+Cloaker:aberration
+Giant Boar:beast
+Drow:humanoid.elf
+Constrictor Snake:beast
+Androsphinx:monstrosity
+Jackal:beast
+Drow Mage:humanoid.elf
+Frog:beast
+Brass Dragon Wyrmling:dragon
+Ape:beast
+Lich:undead
+Gnoll:humanoid.gnoll
+Mage:humanoid.any race
+Goblin:humanoid.goblinoid
+Death Tyrant:undead
+Bearded Devil:fiend.devil
+Blue Slaad:aberration
+Goblin:humanoid.goblinoid
+Death Knight:undead
+Hydra:monstrosity
+Adult Red Dragon:dragon
+Efreeti:elemental
+Blood Hawk:beast
+Giant Goat:beast
+Death Slaad:aberration.shapechanger
+Aarakocra:humanoid.aarakocra
+Helmed Horror:construct
+Bandit Captain:humanoid.any race
+Adult Copper Dragon:dragon
+Ghoul:undead
+Bugbear Chief:humanoid.goblinoid
+Duodrone:construct
+Baboon:beast
+Guard:humanoid.any race
+Flumph:aberration
+Drider:monstrosity
+Giant Spider:beast
+Kuo-toa Archpriest:humanoid.kuo-toa
+Dragon Turtle:dragon
+Axe Beak:beast
+Giant Toad:beast
+Erinyes:fiend.devil
+Copper Dragon Wyrmling:dragon
+Adult Green Dragon:dragon
+Cult Fanatic:humanoid.any race
+Beholder:aberration
+Giant Hyena:beast
+Giant Wolf Spider:beast
+Bronze Dragon Wyrmling:dragon
+Camel:beast
+Cultist:humanoid.any race
+Adult Black Dragon:dragon
+Black Dragon Wyrmling:dragon
+Giant Centipede:beast
+Gibbering Mouther:aberration
+Faerie Dragon:dragon
+Cloud Giant:giant
+Cat:beast
+Adult Brass Dragon:dragon
+Adult Blue Dracolich:undead
+Giant Crab:beast
+Killer Whale:beast
+Bugbear:humanoid.goblinoid
+Displacer Beast:monstrosity
+Ancient Red Dragon:dragon
+Giant Octopus:beast
+Green Hag:fey
+Air Elemental:elemental
+Jackalwere:humanoid.shapechanger
+Ettercap:monstrosity
+Adult Silver Dragon:dragon
+Galeb Duhr:elemental
+Boar:beast
+Gold Dragon Wyrmling:dragon
+Cyclops:giant
+Hyena:beast
+Crawling Claw:undead
+Eagle:beast
+Chuul:aberration
+Flying Sword:construct
+Giant Scorpion:beast
+Demilich:undead
+Hippogriff:monstrosity
+Giant Owl:beast
+Ancient Brass Dragon:dragon
+Giant Lizard:beast
+Black Pudding:ooze
+Giant Crocodile:beast
+Giant Constrictor Snake:beast
+Gynosphinx:monstrosity
+Githzerai Zerth:humanoid.gith
+Ancient Black Dragon:dragon
+Fire Snake:elemental
+Gray Ooze:ooze
+Bone Naga:undead
+Giant Elk:beast
+Harpy:monstrosity
+Arcanaloth:fiend.yugoloth
+Flameskull:undead
+Gas Spore:plant
+Flesh Golem:construct
+Gelatinous Cube:ooze
+Giant Shark:beast
+Magma Mephit:elemental
+Berserker:humanoid.any race
+Bullywug:humanoid.bullywug
+Giant Eagle:beast
+Giant Badger:beast
+Goblin Boss:humanoid.goblinoid
+Giant Poisonous Snake:beast
+Githyanki Knight:humanoid.gith
+Fire Elemental:elemental
+Azer:elemental
+Brown Bear:beast
+Giant Wasp:beast
