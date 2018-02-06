@@ -2,7 +2,7 @@
 <root version="3.0">
 	<properties>
 		<name>5E Extension - NPC flavors</name>
-		<version>1.2</version>
+		<version>1.3</version>
 		
 		<author>Tideturner</author>
 		<description>Add random flavors to NPC names in the combat tracker</description>
@@ -10,7 +10,7 @@
         <loadorder>1</loadorder>
 	</properties>
 
-    <announcement text="NPC flavors v1.2\n- by Tideturner (mangled pencil moustache)"/>
+    <announcement text="NPC flavors v1.3 (Adjustable cardigan)\n- by Tideturner"/>
 
     <base>
         <!-- Strings -->

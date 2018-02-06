@@ -3,12 +3,53 @@ function onInit()
 end
 
 function addBattle( nodeBattle )
+    local aModulesToLoad = {};
+    local sTargetNPCList = LibraryData.getCustomData("battle", "npclist") or "npclist";
+    for _, vNPCItem in pairs(DB.getChildren(nodeBattle, sTargetNPCList)) do
+        local sClass, sRecord = DB.getValue(vNPCItem, "link", "", "");
+        if sRecord ~= "" then
+            local nodeNPC = DB.findNode(sRecord);
+            if not nodeNPC then
+                local sModule = sRecord:match("@(.*)$");
+                if sModule and sModule ~= "" and sModule ~= "*" then
+                    if not StringManager.contains(aModulesToLoad, sModule) then
+                        table.insert(aModulesToLoad, sModule);
+                    end
+                end
+            end
+        end
+        for _,vPlacement in pairs(DB.getChildren(vNPCItem, "maplink")) do
+            local sClass, sRecord = DB.getValue(vPlacement, "imageref", "", "");
+            if sRecord ~= "" then
+                local nodeImage = DB.findNode(sRecord);
+                if not nodeImage then
+                    local sModule = sRecord:match("@(.*)$");
+                    if sModule and sModule ~= "" and sModule ~= "*" then
+                        if not StringManager.contains(aModulesToLoad, sModule) then
+                            table.insert(aModulesToLoad, sModule);
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    if #aModulesToLoad > 0 then
+        local wSelect = Interface.openWindow("module_dialog_missinglink", "");
+        wSelect.initialize(aModulesToLoad, onBattleNPCLoadCallback, { nodeBattle = nodeBattle });
+        return;
+    end
+
     -- Override:
+    -- This is local to CoreRPG combatmanager, so disable.
+    -- if fCustomAddBattle then
+    --    return fCustomAddBattle(nodeBattle);
+    -- end
+    --
     -- NPC flavor clearing whatever it needs clearing
     NPCFlavors.prepareForBattle()
-    --
+    -- END Override
 
-    local sTargetNPCList = LibraryData.getCustomData("battle", "npclist") or "npclist";
     -- Cycle through the NPC list, and add them to the tracker
     for _, vNPCItem in pairs(DB.getChildren(nodeBattle, sTargetNPCList)) do
         -- Get link database node
