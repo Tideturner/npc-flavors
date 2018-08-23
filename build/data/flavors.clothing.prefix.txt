@@ -19,7 +19,7 @@
 "slinky", "slip-on", "slouched", "slouchy", "small", "snug", "soft", "solid", "sophisticated", "spiritual", "sporty",
 "standard", "standard-fit", "state-of-the-art", "stitched", "straight", "strapless", "strappy", "stretchy",
 "stunning", "stylish", "superior", "supersoft", "supple", "supportive", "symmetrical", "tailored", "textured",
-"tight", "timeless", "top-of-the-line", "translucent", "trendsetting", "trendy", "true-to-size", "tunic length",
+"tight", "timeless", "top-of-the-line", "translucent", "Transparent", "trendsetting", "trendy", "true-to-size", "tunic length",
 "unique", "upstyle", "versatile", "vintage", "voloptuous", "voluminous", "waist-slimming", "water-resistant",
 "waterproof", "wear-anywhere", "whimsical", "yarn-dyed", "zippered", "abrassive", "baggy", "cheap", "clashing",
 "ill-fitting", "irregular", "itchy", "loose", "moist", "outdated", "poor fitting", "poor quality", "puckering",
@@ -28,11 +28,10 @@
 "full-grain leather", "lace", "leather", "mohair", "moleskin", "satin", "silk", "suede", "top-grain leather",
 "tweed", "velour", "velvet", "ripped", "torn", "dirty", "bright", "new", "tattered", "elegant", "loud", "shiny",
 "broken", "ugly", "beautiful"
-
-            "ripped", "torn", "dirty", "bright", "new", "tattered", "elegant", "loud", "shiny", "broken",
-            "ugly", "beautiful", "glamorous", "stunning", "exquisite", "moist", "smooth", "short", "tight",
-			 "comfortble-looking", "loose-fitting", "casual", "conservative","formal", "heavy","loose","modest",
-			 "oversized","revealing","skimpy","snug","tailored","unfashionable","zip-up", "bold", "Flamboyant",
-			  "moldy", "tasteful","vintage","skanky","scruffy","shabby","raggedy","mediocre","second-rate",
-			  "substandard","pathetic","inadequate","misshapen","filthy","nasty","atrocious","cheap","shoddy",
-			  "worthless","crude","dynamite","damaged","ill-made","mangled","marred","misproportioned","delicate", "smelly"
+"ripped", "torn", "dirty", "bright", "new", "tattered", "elegant", "loud", "shiny", "broken",
+"ugly", "beautiful", "glamorous", "stunning", "exquisite", "moist", "smooth", "short", "tight",
+"comfortble-looking", "loose-fitting", "casual", "conservative","formal", "heavy","loose","modest",
+"oversized","revealing","skimpy","snug","tailored","unfashionable","zip-up", "bold", "Flamboyant",
+"moldy", "tasteful","vintage","skanky","scruffy","shabby","raggedy","mediocre","second-rate",
+"substandard","pathetic","inadequate","misshapen","filthy","nasty","atrocious","cheap","shoddy",
+"worthless","crude","dynamite","damaged","ill-made","mangled","marred","misproportioned","delicate", "smelly"

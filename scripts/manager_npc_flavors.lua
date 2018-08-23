@@ -6,16 +6,20 @@ function onInit()
     currentRuleset = User.getRulesetName();
 
     OptionsManager.registerOption2("NPCF_ENABLED", true, "npcf_option_group", "npcf_option_enabled", "option_entry_cycler",
-        { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
+        { labels = "option_val_off", values = "off", baselabel = "option_val_on", baseval = "on", default = "on" });
 
     if currentRuleset == "PFRPG" or currentRuleset == "5E" then
         OptionsManager.registerOption2("NPCF_BY_TYPES", true, "npcf_option_group", "npcf_option_by_types", "option_entry_cycler",
-            { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
+            { labels = "option_val_off", values = "off", baselabel = "option_val_on", baseval = "on", default = "on" });
     end
 
     OptionsManager.registerOption2("NPCF_FCHANCE", true, "npcf_option_group", "npcf_option_fchance", "option_entry_cycler",
-        { labels = "npcf_option_fchance_10|npcf_option_fchance_20|npcf_option_fchance_30|npcf_option_fchance_40|npcf_option_fchance_50|npcf_option_fchance_60|npcf_option_fchance_70|npcf_option_fchance_80|npcf_option_fchance_90|npcf_option_fchance_100",
-            values = "10|20|30|40|50|60|70|80|90|100", baselabel = "npcf_option_fchance_10", baseval = "10", default = "40" });
+        { labels = "npcf_option_fchance_20|npcf_option_fchance_30|npcf_option_fchance_40|npcf_option_fchance_50|npcf_option_fchance_60|npcf_option_fchance_70|npcf_option_fchance_80|npcf_option_fchance_90|npcf_option_fchance_100",
+            values = "20|30|40|50|60|70|80|90|100", baselabel = "npcf_option_fchance_10", baseval = "10", default = "40" });
+
+    OptionsManager.registerOption2("NPCF_NONID", true, "npcf_option_group", "npcf_option_nonid_name", "option_entry_cycler",
+        { labels = "npcf_option_unknown|npcf_option_unknown_type|npcf_option_type|npcf_option_arrrgh_monster",
+            values = "unknown|uident_type|type|monster", baselabel = "npcf_option_fg", baseval = "unchanged", default = "unchanged" });
 
     if debugFlavors then
         OptionsManager.registerOption2("NPCF_DEBUG", true, "npcf_option_group", "npcf_option_debug", "option_entry_cycler",
@@ -126,7 +130,18 @@ function renameNPC( nodeEntry )
 
     local npcType, npcSubtype1, npcSubtype2 = npcGetType(StringManager.trim(DB.getValue(nodeEntry, "type", "")));
     local originalNpcName = stripNpcFlavorAndNumber( StringManager.trim(DB.getValue(nodeEntry, "name", "")) );
+    local originalNpcNameNonId = stripNpcFlavorAndNumber( StringManager.trim(DB.getValue(nodeEntry, "nonid_name", "")) );
+
+    local originalNpcNameNonId, originalNpcNumberNonId = npcGetNonIdName( nodeEntry );
+    local renamedNonIdName = originalNpcNameNonId;
+    if originalNpcNumberNonId then
+        renamedNonIdName = renamedNonIdName .. " " .. originalNpcNumberNonId
+    end
+    chatDebugOutput( "Flavored original non id: " .. renamedNonIdName );
+    DB.setValue( nodeEntry, "nonid_name", "string", renamedNonIdName )
+
     local finalNpcName = "";
+    local finalNpcNameNonId = "";
     local setNpcFlavor = false;
     local npcFlavorChance = tonumber( OptionsManager.getOption("NPCF_FCHANCE") );
     local npcFlavorPercent = math.random(1,100);
@@ -153,6 +168,7 @@ function renameNPC( nodeEntry )
 
                 local npcFlavor = constructFlavor( npcType, npcSubtype1, npcSubtype2 );
                 finalNpcName =  originalNpcName .. " (" .. npcFlavor .. ")";
+                finalNpcNameNonId =  originalNpcNameNonId .. " (" .. npcFlavor .. ")";
                 setNpcFlavor = true;
             else
                 chatDebugOutput( "NPC didn't make the cut. No flavor will be applied")
@@ -164,9 +180,15 @@ function renameNPC( nodeEntry )
                 chatDebugOutput( "   /------------" );
                 chatDebugOutput( "    Checking first of its kind (" .. originalNpcName .. ")" );
                 if tonumber( OptionsManager.getOption("NPCF_FCHANCE") ) >= math.random(1,100) then
-                    local npcFirstOfItsKindFlavor = originalNpcName .. " (" .. constructFlavor( npcType, npcSubtype1, npcSubtype2 ) .. ")";
+                    local npcFlavorfirstOfItsKind = constructFlavor( npcType, npcSubtype1, npcSubtype2 );
+                    -- Regular name
+                    local npcFirstOfItsKindFlavor = originalNpcName .. " (" .. npcFlavorfirstOfItsKind .. ")";
                     DB.setValue( npcFirstOfItsKind[originalNpcName], "name", "string", npcFirstOfItsKindFlavor )
                     chatDebugOutput( "    Renamed (First of its kind) " .. npcFirstOfItsKindFlavor .. " (was " .. originalNpcName .. ") of type '" .. npcType .. "' to the combat tracker" );
+                    -- Non id'd name
+                    local npcFirstOfItsKindFlavorNonId = originalNpcNameNonId .. " (" .. npcFlavorfirstOfItsKind .. ")";
+                    DB.setValue( npcFirstOfItsKind[originalNpcName], "nonid_name", "string", npcFirstOfItsKindFlavorNonId )
+                    chatDebugOutput( "    [UNIDENTIFIED] Renamed (First of its kind) " .. npcFirstOfItsKindFlavor .. " (was " .. originalNpcNameNonId .. ") of type '" .. npcType .. "' to the combat tracker" );
                 else
                     chatDebugOutput( "    First of its kind didn't make the cut")
                 end
@@ -184,8 +206,12 @@ function renameNPC( nodeEntry )
     end
 
     if setNpcFlavor then
+        -- Regular name
         DB.setValue( nodeEntry, "name", "string", finalNpcName )
         chatDebugOutput( "Renamed " .. finalNpcName .. " (was " .. originalNpcName .. ") of type '" .. npcType .. "' to the combat tracker" );
+        -- Non id'd name
+        DB.setValue( nodeEntry, "nonid_name", "string", finalNpcNameNonId )
+        chatDebugOutput( "[UNIDENTIFIED] Renamed " .. finalNpcNameNonId .. " (was " .. originalNpcNameNonId .. ") of type '" .. npcType .. "' to the combat tracker" );
     end
 
     return nodeEntry;
@@ -210,6 +236,37 @@ function combatTrackerHasOthersOfSameName( sName, nodeEntry )
 
     return foundCount > 1;
 end
+
+function npcGetNonIdName( nodeEntry )
+    local nonIdName, n = stripNpcFlavorAndNumber(DB.getValue(nodeEntry, "nonid_name", ""));
+
+    -- A custom Non ID name has been set, use that
+    if nonIdName ~= Interface.getString("library_recordtype_empty_nonid_npc") then
+        return nonIdName, n
+    end
+
+    -- unknown|uident_type|type|monster
+    if OptionsManager.getOption("NPCF_NONID") == 'unknown'  then
+        return 'Unknown', n;
+    end
+
+    if OptionsManager.getOption("NPCF_NONID") == 'uident_type'  then
+        local npcType, npcSubtype1, npcSubtype2 = npcGetType(StringManager.trim(DB.getValue(nodeEntry, "type", "")));
+        return 'Unknown ' .. StringManager.capitalize(npcType), n;
+    end
+
+    if OptionsManager.getOption("NPCF_NONID") == 'type'  then
+        local npcType, npcSubtype1, npcSubtype2 = npcGetType(StringManager.trim(DB.getValue(nodeEntry, "type", "")));
+        return StringManager.capitalize(npcType), n;
+    end
+
+    if OptionsManager.getOption("NPCF_NONID") == 'monster'  then
+        return 'Arrrrgh Monster', n;
+    end
+
+    return stripNpcFlavorAndNumber(DB.getValue(nodeEntry, "nonid_name", ""))
+end
+
 
 function stripNpcFlavorAndNumber( s )
     -- Search for flavor + (optional number)

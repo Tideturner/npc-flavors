@@ -110,6 +110,12 @@ function addBattle( nodeBattle )
                             end
                         end
                     end
+					
+					-- Set identification state from encounter record, and disable source link to prevent overriding ID for existing CT entries when identification state changes
+					local sSourceClass,sSourceRecord = DB.getValue(nodeEntry, "sourcelink", "", "");
+					DB.setValue(nodeEntry, "sourcelink", "windowreference", "", "");
+					DB.setValue(nodeEntry, "isidentified", "number", DB.getValue(vNPCItem, "isidentified", 1));
+					DB.setValue(nodeEntry, "sourcelink", "windowreference", sSourceClass, sSourceRecord);
                 else
                     ChatManager.SystemMessage(Interface.getString("ct_error_addnpcfail") .. " (" .. sName .. ")");
                 end

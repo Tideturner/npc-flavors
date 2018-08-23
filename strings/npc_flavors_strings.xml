@@ -5,6 +5,7 @@
     <string name="npcf_option_by_types">Flavors by NPC type</string>
     <string name="npcf_option_fchance">Chance of NPC with flavor</string>
     <string name="npcf_option_debug">Show debug output</string>
+    <string name="npcf_option_nonid_name">Non ID name</string>
 
     <string name="npcf_option_fchance_10">10%</string>
     <string name="npcf_option_fchance_20">20%</string>
@@ -17,4 +18,9 @@
     <string name="npcf_option_fchance_90">90%</string>
     <string name="npcf_option_fchance_100">100%</string>
 
+    <string name="npcf_option_fg">Default</string>
+    <string name="npcf_option_unknown">Unknown</string>
+    <string name="npcf_option_unknown_type">Unknown [type]</string>
+    <string name="npcf_option_type">[type]</string>
+    <string name="npcf_option_arrrgh_monster">Arrrgh Monster</string>
 </root>
