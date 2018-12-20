@@ -2,7 +2,7 @@
 <root version="3.0">
 	<properties>
 		<name>5E Extension - NPC flavors</name>
-		<version>1.4</version>
+		<version>1.5</version>
 		
 		<author>Tideturner</author>
 		<description>Add random flavors to NPC names in the combat tracker</description>
@@ -10,7 +10,7 @@
         <loadorder>1</loadorder>
 	</properties>
 
-    <announcement text="NPC flavors v1.4 (Idiotic footwork)\n- by Tideturner"/>
+    <announcement text="NPC flavors v1.5 (Infected head)\n- by Tideturner"/>
 
     <base>
         <!-- Strings -->

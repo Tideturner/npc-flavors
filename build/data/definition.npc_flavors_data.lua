@@ -87,24 +87,3 @@ Flavors = {
         }
     }
 }
-
-FlavorsByType = {
-    ["humanoid"] = {
-        Flavors.clothing,
-        Flavors.bodyparts,
-        Flavors.hair,
-        Flavors.build,
-        Flavors.behavior
-    },
-    ["humanoid.gnoll"] = {
-        Flavors.clothing,
-        Flavors.bodyparts,
-        Flavors.fur,
-        Flavors.behavior
-    },
-    ["humanoid.human.shapechanger"] = {
-        Flavors.clothing,
-        Flavors.bodyparts,
-        Flavors.fur
-    }
-}

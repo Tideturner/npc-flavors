@@ -45,19 +45,28 @@ function getFlavorCount( construct )
     return result;
 end
 
-function getTypeByOption( npcType, npcSubtype1, npcSubtype2 )
+function getTypeByOption( npcType, npcSubtype1, npcSubtype2, originalNpcName )
     if OptionsManager.getOption("NPCF_BY_TYPES") == "on" then
-        return  npcType, npcSubtype1, npcSubtype2;
+        return  npcType, npcSubtype1, npcSubtype2, originalNpcName;
     end
 
     return "humanoid", nil, nil;
 end
 
-function getSupportedNPCType( npcType, npcSubtype1, npcSubtype2 )
+function getSupportedNPCType( npcType, npcSubtype1, npcSubtype2, originalNpcName )
     local npcTypeWithFlavor;
-    npcType, npcSubtype1, npcSubtype2 = getTypeByOption( npcType, npcSubtype1, npcSubtype2 );
+    originalNpcName = originalNpcName:lower();
+    npcType, npcSubtype1, npcSubtype2, originalNpcName = getTypeByOption( npcType, npcSubtype1, npcSubtype2, originalNpcName );
+
+    npcTypeWithFlavor = StringManager.combine( ".", npcType, npcSubtype1, npcSubtype2, originalNpcName );
+    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
+    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
     npcTypeWithFlavor = StringManager.combine( ".", npcType, npcSubtype1, npcSubtype2 );
+    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
+    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
+
+    npcTypeWithFlavor = StringManager.combine( ".", npcType, npcSubtype1, originalNpcName );
     chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
     if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
@@ -65,15 +74,23 @@ function getSupportedNPCType( npcType, npcSubtype1, npcSubtype2 )
     chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
     if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
+    npcTypeWithFlavor = StringManager.combine( ".", npcType, originalNpcName );
+    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
+    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
+
     npcTypeWithFlavor = npcType;
+    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
+    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
+
+    npcTypeWithFlavor = originalNpcName;
     chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
     if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
     return nul;
 end;
 
-function canConstructFlavor( npcType, npcSubtype1, npcSubtype2 )
-    local npcTypeWithFlavor = getSupportedNPCType( npcType, npcSubtype1, npcSubtype2 );
+function canConstructFlavor( npcType, npcSubtype1, npcSubtype2, originalNpcName )
+    local npcTypeWithFlavor = getSupportedNPCType( npcType, npcSubtype1, npcSubtype2, originalNpcName );
     return npcTypeWithFlavor ~= nil;
 end
 
@@ -83,8 +100,8 @@ function firstTableEntry( table )
     end
 end
 
-function constructFlavor( npcType, npcSubtype1, npcSubtype2 )
-    local npcTypeWithFlavor, npcTypeWithFlavorName = getSupportedNPCType( npcType, npcSubtype1, npcSubtype2 );
+function constructFlavor( npcType, npcSubtype1, npcSubtype2, originalNpcName )
+    local npcTypeWithFlavor, npcTypeWithFlavorName = getSupportedNPCType( npcType, npcSubtype1, npcSubtype2, originalNpcName );
     if not npcTypeWithFlavor then return "" end;
 
     local npcFlavor = "";
@@ -149,7 +166,7 @@ function renameNPC( nodeEntry )
 
     chatDebugOutput( "Adding NPC: " .. originalNpcName );
 
-    if not canConstructFlavor( npcType, npcSubtype1, npcSubtype2 ) then
+    if not canConstructFlavor( npcType, npcSubtype1, npcSubtype2, originalNpcName ) then
         chatDebugOutput("Unsupported NPC type: " .. npcType );
         chatDebugOutput(" - full NPC type: " .. StringManager.combine( ".", npcType, npcSubtype1, npcSubtype2 ) );
         return nodeEntry
@@ -166,7 +183,7 @@ function renameNPC( nodeEntry )
                 if npcSubtype1 then chatDebugOutput( "Subtype 1: " .. npcSubtype1 ); end
                 if npcSubtype2 then chatDebugOutput( "Subtype 2: " .. npcSubtype2 ); end
 
-                local npcFlavor = constructFlavor( npcType, npcSubtype1, npcSubtype2 );
+                local npcFlavor = constructFlavor( npcType, npcSubtype1, npcSubtype2, originalNpcName );
                 finalNpcName =  originalNpcName .. " (" .. npcFlavor .. ")";
                 finalNpcNameNonId =  originalNpcNameNonId .. " (" .. npcFlavor .. ")";
                 setNpcFlavor = true;
@@ -180,7 +197,7 @@ function renameNPC( nodeEntry )
                 chatDebugOutput( "   /------------" );
                 chatDebugOutput( "    Checking first of its kind (" .. originalNpcName .. ")" );
                 if tonumber( OptionsManager.getOption("NPCF_FCHANCE") ) >= math.random(1,100) then
-                    local npcFlavorfirstOfItsKind = constructFlavor( npcType, npcSubtype1, npcSubtype2 );
+                    local npcFlavorfirstOfItsKind = constructFlavor( npcType, npcSubtype1, npcSubtype2, originalNpcName );
                     -- Regular name
                     local npcFirstOfItsKindFlavor = originalNpcName .. " (" .. npcFlavorfirstOfItsKind .. ")";
                     DB.setValue( npcFirstOfItsKind[originalNpcName], "name", "string", npcFirstOfItsKindFlavor )

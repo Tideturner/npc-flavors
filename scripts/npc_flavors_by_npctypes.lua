@@ -161,6 +161,13 @@ function onInit()
             NPCFlavorData.Flavors.hair,
             NPCFlavorData.Flavors.build,
             NPCFlavorData.Flavors.behavior
+        },
+        ["undead.zombie"] = {
+            NPCFlavorData.Flavors.clothing,
+            NPCFlavorData.Flavors.bodyparts,
+            NPCFlavorData.Flavors.hair,
+            NPCFlavorData.Flavors.build,
+            NPCFlavorData.Flavors.behavior
         }
     }
 end
