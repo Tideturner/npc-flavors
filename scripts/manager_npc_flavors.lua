@@ -5,26 +5,45 @@ local debugFlavors = false;
 function onInit()
     currentRuleset = User.getRulesetName();
 
-    OptionsManager.registerOption2("NPCF_ENABLED", true, "npcf_option_group", "npcf_option_enabled", "option_entry_cycler",
-        { labels = "option_val_off", values = "off", baselabel = "option_val_on", baseval = "on", default = "on" });
-
-    if currentRuleset == "PFRPG" or currentRuleset == "5E" then
-        OptionsManager.registerOption2("NPCF_BY_TYPES", true, "npcf_option_group", "npcf_option_by_types", "option_entry_cycler",
+	if User.isHost() then
+        OptionsManager.registerOption2("NPCF_ENABLED", true, "npcf_option_group", "npcf_option_enabled", "option_entry_cycler",
             { labels = "option_val_off", values = "off", baselabel = "option_val_on", baseval = "on", default = "on" });
+
+        if currentRuleset == "PFRPG" or currentRuleset == "5E" then
+            OptionsManager.registerOption2("NPCF_BY_TYPES", true, "npcf_option_group", "npcf_option_by_types", "option_entry_cycler",
+                { labels = "option_val_off", values = "off", baselabel = "option_val_on", baseval = "on", default = "on" });
+        end
+
+        OptionsManager.registerOption2("NPCF_FCHANCE", true, "npcf_option_group", "npcf_option_fchance", "option_entry_cycler",
+            { labels = "npcf_option_fchance_20|npcf_option_fchance_30|npcf_option_fchance_40|npcf_option_fchance_50|npcf_option_fchance_60|npcf_option_fchance_70|npcf_option_fchance_80|npcf_option_fchance_90|npcf_option_fchance_100",
+                values = "20|30|40|50|60|70|80|90|100", baselabel = "npcf_option_fchance_10", baseval = "10", default = "40" });
+
+        OptionsManager.registerOption2("NPCF_NONID", true, "npcf_option_group", "npcf_option_nonid_name", "option_entry_cycler",
+            { labels = "npcf_option_unknown|npcf_option_unknown_type|npcf_option_type|npcf_option_arrrgh_monster",
+                values = "unknown|uident_type|type|monster", baselabel = "npcf_option_fg", baseval = "unchanged", default = "unchanged" });
+
+        if debugFlavors then
+            OptionsManager.registerOption2("NPCF_DEBUG", true, "npcf_option_group", "npcf_option_debug", "option_entry_cycler",
+                { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
+        end
+    end
+end
+
+function hasExt( sName )
+    for _, sExt in pairs(Extension.getExtensions()) do
+        local t = Extension.getExtensionInfo(sExt)
+        if t.name == sName then
+            --chatDebugOutput( 'EXT ' .. sName .. " [OK]" );
+            return true
+        end
     end
 
-    OptionsManager.registerOption2("NPCF_FCHANCE", true, "npcf_option_group", "npcf_option_fchance", "option_entry_cycler",
-        { labels = "npcf_option_fchance_20|npcf_option_fchance_30|npcf_option_fchance_40|npcf_option_fchance_50|npcf_option_fchance_60|npcf_option_fchance_70|npcf_option_fchance_80|npcf_option_fchance_90|npcf_option_fchance_100",
-            values = "20|30|40|50|60|70|80|90|100", baselabel = "npcf_option_fchance_10", baseval = "10", default = "40" });
+    --chatDebugOutput( 'EXT ' .. sName .. " [OK]" );
+    return false
+end
 
-    OptionsManager.registerOption2("NPCF_NONID", true, "npcf_option_group", "npcf_option_nonid_name", "option_entry_cycler",
-        { labels = "npcf_option_unknown|npcf_option_unknown_type|npcf_option_type|npcf_option_arrrgh_monster",
-            values = "unknown|uident_type|type|monster", baselabel = "npcf_option_fg", baseval = "unchanged", default = "unchanged" });
-
-    if debugFlavors then
-        OptionsManager.registerOption2("NPCF_DEBUG", true, "npcf_option_group", "npcf_option_debug", "option_entry_cycler",
-            { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
-    end
+function has5eCombatEnhancer()
+    return hasExt("5e Combat Enhancer")
 end
 
 function isEnabled()

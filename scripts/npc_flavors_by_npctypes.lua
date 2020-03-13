@@ -154,6 +154,10 @@ function onInit()
             NPCFlavorData.Flavors.behavior
         },
 
+        ["undead"] = {
+            NPCFlavorData.Flavors.build,
+            NPCFlavorData.Flavors.behavior
+        },
         -- Vampire, Vampire Spellcaster, Vampire Warrior
         ["undead.shapechanger"] = {
             NPCFlavorData.Flavors.clothing,
