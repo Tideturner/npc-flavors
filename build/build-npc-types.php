@@ -1,8 +1,17 @@
 <?php
 
+// 5E
+// $npc_types_file = "npc-types";
+
+// 2E
+// $npc_types_file = "npc-types-2e";
+
+// 3.5E / PF
+$npc_types_file = "npc-types-35E";
 $table = [];
 
-$fp = fopen('./data/npc-types.txt', 'r' );
+
+$fp = fopen('./data/'.$npc_types_file.'.txt', 'r' );
 while( $line = fgets( $fp ) ) {
 	$parts = explode(':', $line );
 	$types = explode('.', $parts[1] );
@@ -12,7 +21,7 @@ while( $line = fgets( $fp ) ) {
 }
 fclose( $fp );
 
-$fp = fopen( './data/npc-types.lua', 'w' );
+$fp = fopen( './data/'.$npc_types_file.'.lua', 'w' );
 fwrite( $fp, "FlavorsByType = {\n".getLuaTable( '', $table )."\n}" );
 //fwrite( $fp, print_r( $table, true ) );
 fclose( $fp );
@@ -32,7 +41,7 @@ function addToTable( $npc, $types, &$table ) {
 		addToTable( $npc, $types, $table[$type]['subtypes'] );
 	}
 	else {
-		$table[$type]['examples'][] = $npc;
+		$table[$type]['examples'][] = '"'.$npc.'"';
 		sort($table[$type]['examples']);
 	}
 }

@@ -1,22 +1,22 @@
 local npcFirstOfItsKind = {};
 local currentRuleset;
-local debugFlavors = false;
+local debugFlavors = true;
 
 function onInit()
     currentRuleset = User.getRulesetName();
 
-	if User.isHost() then
+	if Session.IsHost then
         OptionsManager.registerOption2("NPCF_ENABLED", true, "npcf_option_group", "npcf_option_enabled", "option_entry_cycler",
             { labels = "option_val_off", values = "off", baselabel = "option_val_on", baseval = "on", default = "on" });
 
-        if currentRuleset == "PFRPG" or currentRuleset == "5E" then
+        if currentRuleset == "PFRPG" or currentRuleset == "5E" or currentRuleset == "2E" then
             OptionsManager.registerOption2("NPCF_BY_TYPES", true, "npcf_option_group", "npcf_option_by_types", "option_entry_cycler",
                 { labels = "option_val_off", values = "off", baselabel = "option_val_on", baseval = "on", default = "on" });
         end
 
         OptionsManager.registerOption2("NPCF_FCHANCE", true, "npcf_option_group", "npcf_option_fchance", "option_entry_cycler",
             { labels = "npcf_option_fchance_20|npcf_option_fchance_30|npcf_option_fchance_40|npcf_option_fchance_50|npcf_option_fchance_60|npcf_option_fchance_70|npcf_option_fchance_80|npcf_option_fchance_90|npcf_option_fchance_100",
-                values = "20|30|40|50|60|70|80|90|100", baselabel = "npcf_option_fchance_10", baseval = "10", default = "40" });
+                values = "20%|30%|40%|50%|60%|70%|80%|90%|100%", baselabel = "npcf_option_fchance_10", baseval = "10%", default = "40&" });
 
         OptionsManager.registerOption2("NPCF_NONID", true, "npcf_option_group", "npcf_option_nonid_name", "option_entry_cycler",
             { labels = "npcf_option_unknown|npcf_option_unknown_type|npcf_option_type|npcf_option_arrrgh_monster",
@@ -24,9 +24,17 @@ function onInit()
 
         if debugFlavors then
             OptionsManager.registerOption2("NPCF_DEBUG", true, "npcf_option_group", "npcf_option_debug", "option_entry_cycler",
-                { labels = "option_val_on|option_val_off", values = "on|off", baselabel = "option_val_on", baseval = "on", default = "on" });
+                { labels = "option_val_off", values = "off", baselabel = "option_val_on", baseval = "on", default = "on" });
         end
     end
+end
+
+function getNPCFlavorChance()
+    local rawOption =OptionsManager.getOption("NPCF_FCHANCE")
+    local numberOption = tonumber( string.match(rawOption,'%d+') )
+    chatDebugOutput("Flavor chance raw: " .. rawOption )
+    chatDebugOutput("Flavor chance number: " .. numberOption )
+    return numberOption
 end
 
 function hasExt( sName )
@@ -47,6 +55,7 @@ function has5eCombatEnhancer()
 end
 
 function isEnabled()
+    chatDebugOutput( 'isEnabled: '..OptionsManager.getOption("NPCF_ENABLED") );
     return OptionsManager.getOption("NPCF_ENABLED") == "on";
 end
 
@@ -69,7 +78,13 @@ function getTypeByOption( npcType, npcSubtype1, npcSubtype2, originalNpcName )
         return  npcType, npcSubtype1, npcSubtype2, originalNpcName;
     end
 
-    return "humanoid", nil, nil;
+    return "humanoid", nil, nil, originalNpcName;
+end
+
+function isTypePathInRulesetTable( npcTypeWithFlavor )
+    chatDebugOutput(currentRuleset,npcTypeWithFlavor)
+    local result = NPCFlavorDataNpcTypes.FlavorsByType[currentRuleset][npcTypeWithFlavor]
+    return result
 end
 
 function getSupportedNPCType( npcType, npcSubtype1, npcSubtype2, originalNpcName )
@@ -78,32 +93,32 @@ function getSupportedNPCType( npcType, npcSubtype1, npcSubtype2, originalNpcName
     npcType, npcSubtype1, npcSubtype2, originalNpcName = getTypeByOption( npcType, npcSubtype1, npcSubtype2, originalNpcName );
 
     npcTypeWithFlavor = StringManager.combine( ".", npcType, npcSubtype1, npcSubtype2, originalNpcName );
-    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
-    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
+    chatDebugOutput( 'Testing type 1: '..npcTypeWithFlavor);
+    if isTypePathInRulesetTable( npcTypeWithFlavor ) then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
     npcTypeWithFlavor = StringManager.combine( ".", npcType, npcSubtype1, npcSubtype2 );
-    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
-    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
+    chatDebugOutput( 'Testing type 2: '..npcTypeWithFlavor);
+    if isTypePathInRulesetTable( npcTypeWithFlavor ) then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
     npcTypeWithFlavor = StringManager.combine( ".", npcType, npcSubtype1, originalNpcName );
-    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
-    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
+    chatDebugOutput( 'Testing type 3: '..npcTypeWithFlavor);
+    if isTypePathInRulesetTable( npcTypeWithFlavor ) then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
     npcTypeWithFlavor = StringManager.combine( ".", npcType, npcSubtype1 );
-    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
-    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
+    chatDebugOutput( 'Testing type 4: '..npcTypeWithFlavor);
+    if isTypePathInRulesetTable( npcTypeWithFlavor ) then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
     npcTypeWithFlavor = StringManager.combine( ".", npcType, originalNpcName );
-    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
-    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
+    chatDebugOutput( 'Testing type 5: '..npcTypeWithFlavor);
+    if isTypePathInRulesetTable( npcTypeWithFlavor ) then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
-    npcTypeWithFlavor = npcType;
-    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
-    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
+    npcTypeWithFlavor = StringManager.combine( ".", npcType );
+    chatDebugOutput( 'Testing type 6: '..npcTypeWithFlavor);
+    if isTypePathInRulesetTable( npcTypeWithFlavor ) then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
     npcTypeWithFlavor = originalNpcName;
-    chatDebugOutput( 'Testing type: '..npcTypeWithFlavor);
-    if NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] then return npcTypeWithFlavor, npcTypeWithFlavor end;
+    chatDebugOutput( 'Testing type 7: '..npcTypeWithFlavor);
+    if isTypePathInRulesetTable( npcTypeWithFlavor ) then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
     return nul;
 end;
@@ -125,8 +140,8 @@ function constructFlavor( npcType, npcSubtype1, npcSubtype2, originalNpcName )
 
     local npcFlavor = "";
     local npcFlavorDebug = "";
-    local flavorType = math.random( #NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor] );
-    local table = NPCFlavorDataNpcTypes.FlavorsByType[npcTypeWithFlavor][flavorType];
+    local flavorType = math.random( #NPCFlavorDataNpcTypes.FlavorsByType[currentRuleset][npcTypeWithFlavor] );
+    local table = NPCFlavorDataNpcTypes.FlavorsByType[currentRuleset][npcTypeWithFlavor][flavorType];
 
     chatDebugOutput( " Using flavor type " .. flavorType .. " (".. npcTypeWithFlavorName ..") " .. " for " .. npcTypeWithFlavor );
 
@@ -147,7 +162,8 @@ end
 
 function chatDebugOutput( s )
     if OptionsManager.getOption("NPCF_DEBUG") == "on" then
-        Comm.addChatMessage( {text = s } );
+        Debug.console(s)
+        --Comm.addChatMessage( {text = s } );
     end
 end
 
@@ -179,7 +195,7 @@ function renameNPC( nodeEntry )
     local finalNpcName = "";
     local finalNpcNameNonId = "";
     local setNpcFlavor = false;
-    local npcFlavorChance = tonumber( OptionsManager.getOption("NPCF_FCHANCE") );
+    local npcFlavorChance = getNPCFlavorChance();
     local npcFlavorPercent = math.random(1,100);
     local npcFlavorChanceSuccess = npcFlavorChance >= npcFlavorPercent;
 
@@ -215,7 +231,7 @@ function renameNPC( nodeEntry )
             if npcFirstOfItsKind[originalNpcName] then
                 chatDebugOutput( "   /------------" );
                 chatDebugOutput( "    Checking first of its kind (" .. originalNpcName .. ")" );
-                if tonumber( OptionsManager.getOption("NPCF_FCHANCE") ) >= math.random(1,100) then
+                if getNPCFlavorChance() >= math.random(1,100) then
                     local npcFlavorfirstOfItsKind = constructFlavor( npcType, npcSubtype1, npcSubtype2, originalNpcName );
                     -- Regular name
                     local npcFirstOfItsKindFlavor = originalNpcName .. " (" .. npcFlavorfirstOfItsKind .. ")";
@@ -278,6 +294,7 @@ function npcGetNonIdName( nodeEntry )
 
     -- A custom Non ID name has been set, use that
     if nonIdName ~= Interface.getString("library_recordtype_empty_nonid_npc") then
+        chatDebugOutput( "npcGetNonIdName: Using custom resource: " .. nonIdName )
         return nonIdName, n
     end
 
@@ -321,18 +338,27 @@ function stripNpcFlavorAndNumber( s )
 end
 
 function npcGetType(s)
+    s = s:lower()
+
     if currentRuleset == "PFRPG" then
         if s:find("%(") then
-            local _, _, type, subtype = s:match( "(.+) (.+) (.+) %((.+)%)");
+            local size, _, type, subtype = s:match( "(.+) (.+) (.+) %((.+)%)");
+            if (not size) then
+                size, type, subtype = s:match( "(.+) (.+) %((.+)%)");
+            end
 
-            if subtype:find(", ") then
+            if not subtype then
+                chatDebugOutput(' --- WEIRD ---- ' .. s);
+            end
+
+            if subtype and subtype:find(", ") then
                 return type, subtype:match( "(%a+),%s(%a+)");
             end
 
-            return type, subtype;
+            return type or "", subtype or "";
         else
             local _, _, type = s:match( "(.+) (.+) (.+)");
-            return type;
+            return type or "";
         end
     end
 
@@ -346,6 +372,19 @@ function npcGetType(s)
         end
     end
 
+    if currentRuleset == "2E" then
+        s = LibraryData5E.sanitizevNodeText(s)
+        local types, _ = StringManager.split(s, ",", true);
+        if #types == 1 then 
+            return types[1]
+        elseif #types == 2 then
+             return types[1], types[2]
+        elseif #types == 3 then
+            return types[1], types[2], types[3]
+        end
+    end
+
+    chatDebugOutput(' --- RAW ---- ' .. s);
     return s;
 end
 
