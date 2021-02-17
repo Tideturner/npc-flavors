@@ -6,6 +6,8 @@ local addingFromBattle = false;
 function onInit()
     rulesetName = User.getRulesetName()
 	if Session.IsHost then
+        --Debug.console("Flavor combat - is host")
+        --Debug.console("Ruleset", rulesetName)
         if ( rulesetName == "2E" ) then
             originalAddNPC = CombatManagerADND.addCTANPC;
             CombatManagerADND.addCTANPC = NPCFlavorAddNPC;
@@ -21,22 +23,22 @@ end
 
 
 function getCombatantNodes()
-    if (rulesetName == "2E") then
-        return DB.getChildren("combattracker.list")
-    end
-    return CombatManager.getCombatantNodes()
+    return DB.getChildren("combattracker.list")
 end
 
 function addFlavors( caller )
-    Debug.console('Running from -- ' .. caller .. ' --')
+    --Debug.console('Running from -- ' .. caller .. ' --')
     if ( not NPCFlavors.isEnabled() ) then 
         return; 
     end
 
     local aCurrentCombatants = getCombatantNodes();
+    --Debug.console("Combatants",aCurrentCombatants)
     for _,nodeEntry in pairs(aCurrentCombatants) do
-        local sActorType, _ = ActorManager.getTypeAndNodeName(nodeEntry)
+        local sActorType = ActorManager.getRecordType(nodeEntry)
+        --Debug.console("getRecordType",ActorManager.getRecordType(nodeEntry))
         if sActorType == 'npc' and DB.getValue(nodeEntry, "has_npc_flavor", 0) == 0 then
+            --Debug.console("Flavoring")
             NPCFlavors.renameNPC( nodeEntry );
             local sFlavorName = DB.getValue(nodeEntry, "name", "")
             DB.setValue(nodeEntry, "has_npc_flavor", "number", 1)
@@ -45,7 +47,7 @@ function addFlavors( caller )
 end
 
 function NPCFlavorAddBattle( nodeBattle )
-    Debug.console("NPCFlavorAddBattle")
+    --Debug.console("NPCFlavorAddBattle")
     addingFromBattle = true
 
     originalAddBattle( nodeBattle )
@@ -57,13 +59,13 @@ function NPCFlavorAddBattle( nodeBattle )
 end
 
 function NPCFlavorAddNPC( sClass, nodeNPC, sName )
-    Debug.console("NPCFlavorAddNPC",addingFromBattle)
+    --Debug.console("NPCFlavorAddNPC",addingFromBattle)
     local result = originalAddNPC( sClass, nodeNPC, sName )
 
     if (not addingFromBattle) then
         addFlavors('addNPC')
     else
-        Debug.console("addNPC - skipping, adding from battle")
+        --Debug.console("addNPC - skipping, adding from battle")
     end
 
     return result

@@ -1,6 +1,6 @@
 local npcFirstOfItsKind = {};
 local currentRuleset;
-local debugFlavors = true;
+local debugFlavors = false;
 
 function onInit()
     currentRuleset = User.getRulesetName();
@@ -16,7 +16,7 @@ function onInit()
 
         OptionsManager.registerOption2("NPCF_FCHANCE", true, "npcf_option_group", "npcf_option_fchance", "option_entry_cycler",
             { labels = "npcf_option_fchance_20|npcf_option_fchance_30|npcf_option_fchance_40|npcf_option_fchance_50|npcf_option_fchance_60|npcf_option_fchance_70|npcf_option_fchance_80|npcf_option_fchance_90|npcf_option_fchance_100",
-                values = "20%|30%|40%|50%|60%|70%|80%|90%|100%", baselabel = "npcf_option_fchance_10", baseval = "10%", default = "40&" });
+                values = "20%|30%|40%|50%|60%|70%|80%|90%|100%", baselabel = "npcf_option_fchance_10", baseval = "10%", default = "40%" });
 
         OptionsManager.registerOption2("NPCF_NONID", true, "npcf_option_group", "npcf_option_nonid_name", "option_entry_cycler",
             { labels = "npcf_option_unknown|npcf_option_unknown_type|npcf_option_type|npcf_option_arrrgh_monster",
