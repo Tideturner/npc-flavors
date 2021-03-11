@@ -83,8 +83,18 @@ end
 
 function isTypePathInRulesetTable( npcTypeWithFlavor )
     chatDebugOutput(currentRuleset,npcTypeWithFlavor)
+
+    if not NPCFlavorDataNpcTypes.FlavorsByType[currentRuleset] then
+        return false;
+    end
+
+    if not NPCFlavorDataNpcTypes.FlavorsByType[currentRuleset][npcTypeWithFlavor] then
+        return false;
+    end
+
     local result = NPCFlavorDataNpcTypes.FlavorsByType[currentRuleset][npcTypeWithFlavor]
-    return result
+
+    return result and #result > 0
 end
 
 function getSupportedNPCType( npcType, npcSubtype1, npcSubtype2, originalNpcName )
@@ -120,7 +130,7 @@ function getSupportedNPCType( npcType, npcSubtype1, npcSubtype2, originalNpcName
     chatDebugOutput( 'Testing type 7: '..npcTypeWithFlavor);
     if isTypePathInRulesetTable( npcTypeWithFlavor ) then return npcTypeWithFlavor, npcTypeWithFlavor end;
 
-    return nul;
+    return nil;
 end;
 
 function canConstructFlavor( npcType, npcSubtype1, npcSubtype2, originalNpcName )
@@ -140,6 +150,7 @@ function constructFlavor( npcType, npcSubtype1, npcSubtype2, originalNpcName )
 
     local npcFlavor = "";
     local npcFlavorDebug = "";
+    -- Debug.console( currentRuleset,npcTypeWithFlavor,NPCFlavorDataNpcTypes.FlavorsByType[currentRuleset][npcTypeWithFlavor])
     local flavorType = math.random( #NPCFlavorDataNpcTypes.FlavorsByType[currentRuleset][npcTypeWithFlavor] );
     local table = NPCFlavorDataNpcTypes.FlavorsByType[currentRuleset][npcTypeWithFlavor][flavorType];
 
