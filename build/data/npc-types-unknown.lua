@@ -1,0 +1,6 @@
+FlavorsByType = {
+	-- "Human"
+	["humanoid"] = {
+	},
+
+}

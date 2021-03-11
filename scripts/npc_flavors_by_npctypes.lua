@@ -1,4 +1,5 @@
 FlavorsByType = {
+    ["UNKNOWN"] = {},
     ["5E"] = {},
     ["PFRPG"] = {},
     ["2E"] = {},
@@ -20,6 +21,17 @@ function onInit()
         - If an NPC has a specific match, that data is used (humanoid.gnoll)
         - Otherwise any first match in the type chain is used (humanoid.human.shapechanger > humanoid.human > humanoid)
     ]]
+
+    FlavorsByType["UNKNOWN"] = {
+        -- "Human"
+        ["humanoid"] = {
+            NPCFlavorData.Flavors.clothing,
+            NPCFlavorData.Flavors.bodyparts,
+            NPCFlavorData.Flavors.hair,
+            NPCFlavorData.Flavors.build,
+            NPCFlavorData.Flavors.behavior
+        },    
+    }
 
     FlavorsByType["5E"] = {
         -- Aboleth, Beholder, Blue Slaad, Chuul, Cloaker, Flumph, Gibbering Mouther, Grell, Intellect Devourer,

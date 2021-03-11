@@ -7,9 +7,12 @@
 // $npc_types_file = "npc-types-2e";
 
 // 3.5E / PF
-$npc_types_file = "npc-types-35E";
-$table = [];
+// $npc_types_file = "npc-types-35E";
 
+// Unknown ruleset
+$npc_types_file = "npc-types-unknown";
+
+$table = [];
 
 $fp = fopen('./data/'.$npc_types_file.'.txt', 'r' );
 while( $line = fgets( $fp ) ) {
