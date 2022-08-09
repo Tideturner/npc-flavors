@@ -12,8 +12,8 @@ function onInit()
             originalAddNPC = CombatManagerADND.addCTANPC;
             CombatManagerADND.addCTANPC = NPCFlavorAddNPC;
         else
-            originalAddNPC = CombatManager.addNPC;
-            CombatManager.addNPC = NPCFlavorAddNPC;
+            originalAddNPC = CombatRecordManager.addNPC;
+            CombatRecordManager.addNPC = NPCFlavorAddNPC;
         end
         
         originalAddBattle = CombatManager.addBattle;
@@ -58,15 +58,12 @@ function NPCFlavorAddBattle( nodeBattle )
     addingFromBattle = false
 end
 
-function NPCFlavorAddNPC( sClass, nodeNPC, sName )
-    --Debug.console("NPCFlavorAddNPC",addingFromBattle)
-    local result = originalAddNPC( sClass, nodeNPC, sName )
+function NPCFlavorAddNPC( tCustom )
+    originalAddNPC( tCustom )
 
     if (not addingFromBattle) then
         addFlavors('addNPC')
     else
         --Debug.console("addNPC - skipping, adding from battle")
     end
-
-    return result
 end
