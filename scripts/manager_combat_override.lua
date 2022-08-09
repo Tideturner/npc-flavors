@@ -10,7 +10,7 @@ function onInit()
         --Debug.console("Ruleset", rulesetName)
         if ( rulesetName == "2E" ) then
             originalAddNPC = CombatManagerADND.addCTANPC;
-            CombatManagerADND.addCTANPC = NPCFlavorAddNPC;
+            CombatManagerADND.addCTANPC = NPCFlavorAddNPC2E;
         else
             originalAddNPC = CombatRecordManager.addNPC;
             CombatRecordManager.addNPC = NPCFlavorAddNPC;
@@ -23,7 +23,7 @@ end
 
 
 function getCombatantNodes()
-    return DB.getChildren("combattracker.list")
+    return DB.getChildren(CombatManager.CT_LIST)
 end
 
 function addFlavors( caller )
@@ -66,4 +66,15 @@ function NPCFlavorAddNPC( tCustom )
     else
         --Debug.console("addNPC - skipping, adding from battle")
     end
+end
+
+function NPCFlavorAddNPC2E( sClass, nodeNPC, sName )
+    local nodeEntry = originalAddNPC( sClass, nodeNPC, sName )
+
+    if (not addingFromBattle) then
+        addFlavors('addNPC')
+    else
+        --Debug.console("addNPC - skipping, adding from battle")
+    end
+	return nodeEntry
 end
