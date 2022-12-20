@@ -290,7 +290,7 @@ function combatTrackerHasOthersOfSameName( sName, nodeEntry )
     sName = stripNpcFlavorAndNumber(sName);
     local foundCount = 0;
 
-    for _,v in pairs(DB.getChildren(CombatManager.CT_LIST)) do
+    for _,v in pairs(CombatManagerOverride.getCombatantNodes()) do
         local sEntryName = DB.getValue(v, "name", "");
         local sOtherName, sNumber = stripNpcFlavorAndNumber(sEntryName);
         if sOtherName == sName then

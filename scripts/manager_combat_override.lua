@@ -6,23 +6,20 @@ local addingFromBattle = false;
 function onInit()
     rulesetName = User.getRulesetName()
 	if Session.IsHost then
-        --Debug.console("Flavor combat - is host")
-        --Debug.console("Ruleset", rulesetName)
-        if ( rulesetName == "2E" ) then
-            originalAddNPC = CombatManagerADND.addCTANPC;
-            CombatManagerADND.addCTANPC = NPCFlavorAddNPC2E;
-        else
-            originalAddNPC = CombatRecordManager.addNPC;
-            CombatRecordManager.addNPC = NPCFlavorAddNPC;
-        end
-        
-        originalAddBattle = CombatManager.addBattle;
-        CombatManager.addBattle = NPCFlavorAddBattle;
+        CombatRecordManager.setRecordTypePostAddCallback("npc", NPCFlavorAddNPC)
+        CombatRecordManager.setRecordTypePostAddCallback("battle", NPCFlavorAddBattle)
     end
 end
 
 
 function getCombatantNodes()
+    if rulesetName == "SavageWorlds" then
+        return CombatManager2.getCombatantNodes();
+    end
+    if rulesetName == "SWPF" then
+        return CombatManager2.getCombatantNodes();
+    end
+    
     return DB.getChildren(CombatManager.CT_LIST)
 end
 
@@ -50,7 +47,9 @@ function NPCFlavorAddBattle( nodeBattle )
     --Debug.console("NPCFlavorAddBattle")
     addingFromBattle = true
 
-    originalAddBattle( nodeBattle )
+    if originalAddBattle then
+        originalAddBattle( nodeBattle )
+    end
 
     NPCFlavors.prepareForBattle()
     addFlavors("addBattle")
@@ -59,7 +58,9 @@ function NPCFlavorAddBattle( nodeBattle )
 end
 
 function NPCFlavorAddNPC( tCustom )
-    originalAddNPC( tCustom )
+    if originalAddNPC then
+        originalAddNPC( tCustom )
+    end
 
     if (not addingFromBattle) then
         addFlavors('addNPC')
