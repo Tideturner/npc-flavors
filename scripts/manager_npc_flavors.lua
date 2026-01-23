@@ -358,7 +358,7 @@ function npcGetType(s)
     s = s:lower()
 
     if getCurrentRuleset() == "PFRPG" then
-        if s:find("%(") then
+        if s:find("%(.+%)") then
             local size, _, type, subtype = s:match( "(.+) (.+) (.+) %((.+)%)");
             if (not size) then
                 size, type, subtype = s:match( "(.+) (.+) %((.+)%)");
@@ -380,7 +380,7 @@ function npcGetType(s)
     end
 
     if getCurrentRuleset() == "5E" then
-        if s:find("%(") then
+        if s:find("%(.+%)") then
             local type, subtype = s:match( "(.+) %((.+)%)");
             if subtype:find(", ") then
                 return type, subtype:match( "(.+), (.+)");
