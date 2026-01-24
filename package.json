@@ -1,0 +1,19 @@
+{
+    "name": "npc-flavors-v2-builder",
+    "version": "2.0.0",
+    "description": "Build script for NPC Flavors Fantasy Grounds Unity extension",
+    "main": "build-extension.js",
+    "scripts": {
+        "build": "node build-extension.js"
+    },
+    "keywords": [
+        "fantasy-grounds",
+        "fgu",
+        "extension"
+    ],
+    "author": "Tideturner",
+    "license": "MIT",
+    "dependencies": {
+        "adm-zip": "^0.5.10"
+    }
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  Adds a regenerate / rest flavor button to NPC entries
+-->
+
+<root>
+	<!-- Button to regenerate flavor for NPC -->
+	<template name="button_npcf_regenerate">
+		<buttonfield name="button_npcf_regen">
+			<anchored to="leftanchor" width="18" height="18">
+				<top offset="0" />
+				<left relation="relative" offset="-16" postoffset="3" />
+			</anchored>
+			<icon normal="button_npcf_regen" pressed="button_npcf_regen_down" />
+			<tooltip textres="npcf_tooltip_regenerate" />
+			<invisible />
+			<gmvisibleonly />
+			<script>
+				function onInit()
+					-- Listen for flag being set by combat callback
+					local nodeEntry = window.getDatabaseNode();
+					if nodeEntry then
+						DB.addHandler(DB.getPath(nodeEntry, "npcf_show_button"), "onUpdate", onShowButtonChanged);
+						-- Check initial value in case it was already set
+						onShowButtonChanged();
+					end
+				end
+				
+				function onClose()
+					-- Clean up handler
+					local nodeEntry = window.getDatabaseNode();
+					if nodeEntry then
+						DB.removeHandler(DB.getPath(nodeEntry, "npcf_show_button"), "onUpdate", onShowButtonChanged);
+					end
+				end
+				
+				function onShowButtonChanged()
+					local nodeEntry = window.getDatabaseNode();
+					if nodeEntry then
+						local bShowButton = DB.getValue(nodeEntry, "npcf_show_button", 0) == 1;
+						setVisible(bShowButton);
+					end
+				end
+				
+				function onButtonPress()
+					local nodeEntry = window.getDatabaseNode();
+					if nodeEntry then
+						if Input.isAltPressed() then
+							NPCFlavor_Generator.resetFlavor(nodeEntry);
+						else
+							NPCFlavor_Generator.regenerateFlavor(nodeEntry);
+						end
+					end
+					return true;
+				end
+			</script>
+		</buttonfield>
+	</template>
+
+	<!-- Extended CT entry that includes the regenerate button -->
+	<windowclass name="ct_entry" merge="join">
+		<sheetdata>
+			<button_npcf_regenerate />
+		</sheetdata>
+	</windowclass>
+</root>

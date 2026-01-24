@@ -1,0 +1,143 @@
+-- Anatomical Features Word Library
+-- Contains anatomy by creature type
+
+Data = {
+    general = {
+        "skin", "eyes", "face", "hands", "body", "form", "head", "nose",
+        "leg", "left leg", "right leg", "legs", "arm", "left arm",
+        "right arm", "arms", "finger", "fingers", "middle finger", "thumb",
+        "thumbs", "knee", "left knee", "right knee", "knees", "shoulder",
+        "left shoulder", "right shoulder", "shoulders", "ear", "left ear",
+        "right ear", "ears", "eye", "left eye", "right eye", "eyes",
+        "tooth", "teeth", "torso"
+    },
+    humanoid = {
+        "hair", "beard", "tattoos", "scars", "features", "anchor beard",
+        "bristles", "burnsides", "chin curtain", "chin whiskers",
+        "chinstrap beard", "chops", "crumb catcher", "eyebrows",
+        "facial hair", "full beard", "goatee", "handlebar mustache",
+        "horseshoe moustache", "jawline beard", "lip hair", "locks",
+        "moustache", "moustache ends", "moustache points", "muttonchops",
+        "nose bristles", "pencil moustache", "side burns", "soul patch",
+        "spade beard", "tuff scruff", "tuft", "walrus moustache", "whiskers",
+        "smile", "grin", "frown", "sneer", "smirk", "expression", "countenance",
+        "visage", "profile", "complexion", "posture", "stance", "bearing",
+        "gait", "mannerisms", "voice", "accent", "scar across nose",
+        "brand on cheek", "burn mark", "missing tooth", "gold tooth",
+        "crooked nose", "cauliflower ear", "disfigured face"
+    },
+    beast = {
+        "fur", "claws", "fangs", "hide", "pelt", "mane", "mop", "shock",
+        "bristles", "locks", "fuzz", "thatch", "wool", "snout", "jaws",
+        "tail", "paws", "hooves", "coat", "fleece", "down", "feathers",
+        "plumage", "whiskers", "vibrissae", "antennae", "proboscis",
+        "trunk", "beak", "bill", "muzzle", "snout", "nose", "tusks",
+        "incisors", "canines", "molars", "teeth", "antlers", "horns",
+        "rack", "crown", "points", "dewclaw", "talons", "nails", "claws",
+        "hooks", "haunches", "flanks", "withers", "croup", "rump", "mane",
+        "ruff", "hackles", "crest", "plume", "quills", "spines", "barbs",
+        "stingers", "venom sacs", "scales", "plates", "shell", "carapace",
+        "exoskeleton", "webbing", "fins", "flippers", "gills", "blow hole",
+        "pouch", "sac", "crop", "wattle", "comb"
+    },
+    monstrous = {
+        "tentacles", "carapace", "chitin", "spines", "barbs", "stinger",
+        "mandibles", "eyestalks", "pseudopods", "suckers", "appendages",
+        "feelers", "antennae", "palps", "chelicerae", "pincers",
+        "proboscis", "tube feet", "cilia", "flagella", "polyps", "segments",
+        "rings", "plates", "armor", "shell", "compound eyes",
+        "faceted eyes", "multiple eyes", "eye clusters", "ocelli",
+        "feeding tubes", "siphons", "spiracles", "book lungs", "tracheae",
+        "venom glands", "poison sacs", "acid glands", "slime glands",
+        "musk glands", "ovipositor", "egg sac", "brood pouch",
+        "spawning organs", "reproductive stalks", "membrane wings",
+        "webbed appendages", "gill slits", "breathing holes", "air sacs",
+        "nerve clusters", "ganglia", "brain sac", "sensory pits",
+        "heat sensors", "bioluminescent organs", "light organs",
+        "photophores", "glow patches", "luminescent nodes"
+    },
+    dragon = {
+        "wings", "horns", "tail", "talons", "scales", "crest", "spines",
+        "ridges", "frills", "maw", "wing membranes", "wing claws",
+        "wing joints", "wingspan", "wing tips", "horn crown", "nasal horn",
+        "brow horns", "jaw horns", "cheek horns", "tail blade", "tail club",
+        "tail spikes", "tail barbs", "tail fins", "front talons",
+        "hind talons", "dewclaws", "sickle claws", "rending claws",
+        "neck scales", "belly scales", "back scales", "armored scales",
+        "scale plates", "head crest", "neck crest", "back crest",
+        "tail crest", "crest spines", "dorsal spines", "shoulder spines",
+        "tail spines", "leg spines", "jaw spines", "brow ridges",
+        "eye ridges", "nasal ridges", "cheek ridges", "jaw ridges",
+        "neck frills", "head frills", "jaw frills", "ear frills",
+        "throat frills", "fanged maw", "toothy maw", "gaping maw",
+        "draconic maw", "serpentine maw", "forked tongue", "serpent tongue",
+        "tasting tongue", "flickering tongue", "long tongue",
+        "breath weapon", "fire gland", "venom sacs", "acid glands",
+        "frost organs"
+    },
+    construct = {
+        "gears", "joints", "chassis", "plating", "mechanisms", "frame",
+        "cogs", "wheels", "sprockets", "ratchets", "pawls", "pistons",
+        "cylinders", "actuators", "servos", "motors", "springs", "coils",
+        "tension cables", "drive chains", "belts", "ball joints", "hinges",
+        "pivots", "swivels", "bearings", "armor plates", "hull plates",
+        "shell plating", "protective casing", "shielding", "control rods",
+        "levers", "cranks", "switches", "dials", "power core",
+        "energy cell", "fuel tank", "boiler", "reactor", "optical sensors",
+        "visual receptors", "camera lenses", "detection arrays", "scanners",
+        "appendage mounts", "tool arms", "manipulators", "grippers",
+        "clamps", "exhaust vents", "cooling fins", "radiators",
+        "heat sinks", "grilles", "runes", "sigils", "glyphs",
+        "inscriptions", "enchantments"
+    },
+    elemental = {
+        "core", "essence", "form", "manifestation", "aura", "vortex",
+        "swirl", "spiral", "whirlpool", "maelstrom", "flame body",
+        "water body", "air body", "earth body", "energy body",
+        "elemental heart", "primal core", "nexus", "focal point", "center",
+        "corona", "halo", "nimbus", "radiance", "emanation", "tendrils",
+        "streamers", "wisps", "trails", "ribbons", "crystalline structure",
+        "lattice", "matrix", "framework", "skeleton", "plasma field",
+        "energy field", "force field", "barrier", "shield", "flame jets",
+        "water jets", "air jets", "steam vents", "geysers", "appendages",
+        "limbs", "pseudopods", "extensions", "projections"
+    },
+    undead = {
+        "flesh", "bones", "skull", "ribcage", "sinew", "corpse", "remains",
+        "rotted flesh", "decayed meat", "putrid skin", "necrotic tissue",
+        "dead flesh", "exposed bones", "protruding bones", "yellowed bones",
+        "cracked bones", "splintered bones", "hollow skull",
+        "grinning skull", "eyeless skull", "cracked skull",
+        "fractured skull", "skeletal ribcage", "exposed ribs",
+        "protruding ribs", "shattered ribs", "fractured ribs", "torn sinew",
+        "stringy sinew", "dried sinew", "exposed sinew", "withered sinew",
+        "desiccated corpse", "rotting corpse", "mummified corpse",
+        "skeletal corpse", "putrid corpse", "grave remains",
+        "mortal remains", "skeletal remains", "charred remains",
+        "mummified remains", "empty sockets", "hollow eyes", "sunken eyes",
+        "lifeless eyes", "vacant eyes", "exposed spine", "vertebrae",
+        "spinal column", "backbone", "skeletal spine", "jawbone",
+        "mandible", "teeth", "fangs", "skeletal grin",
+        -- Humanoid features (for intelligent undead)
+        "hair", "beard", "features", "scars", "tattoos",
+        "smile", "grin", "frown", "sneer", "smirk", "expression", "countenance",
+        "visage", "profile", "complexion", "posture", "stance", "bearing",
+        "gait", "mannerisms", "voice", "face", "hands", "fingers"
+    },
+    
+    -- Incorporeal undead (ghosts, spectres, wraiths)
+    incorporeal = {
+        "form", "essence", "spirit", "presence", "manifestation", "visage",
+        "ethereal form", "spectral form", "ghostly form", "translucent form",
+        "wispy form", "shadowy form", "phantom form", "immaterial form",
+        "vaporous essence", "ghostly essence", "spectral essence",
+        "tormented spirit", "lost spirit", "restless spirit", "vengeful spirit",
+        "haunting presence", "chilling presence", "spectral presence",
+        "ghostly visage", "spectral visage", "ethereal visage", "haunting visage",
+        "phantom manifestation", "spectral manifestation",
+        "fading outline", "ghostly outline", "translucent outline",
+        "hollow eyes", "empty eyes", "soulless eyes", "haunting eyes",
+        "mournful face", "anguished face", "tormented face",
+        "ectoplasm", "spirit body", "ethereal substance"
+    }
+}
