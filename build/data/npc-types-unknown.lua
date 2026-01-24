@@ -1,6 +1,0 @@
-FlavorsByType = {
-	-- "Human"
-	["humanoid"] = {
-	},
-
-}

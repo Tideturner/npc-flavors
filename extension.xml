@@ -1,24 +1,73 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <root version="3.0">
 	<properties>
-		<name>5E Extension - NPC flavors</name>
-		<version>1.12</version>
-		
+		<name>Feature: NPC Flavors</name>
+		<version>2.0</version>
 		<author>Tideturner</author>
-		<description>Add random flavors to NPC names in the combat tracker</description>
-
-        <loadorder>100</loadorder>
+		<description>Add random template-based flavors to NPC names in the combat tracker</description>
+		<loadorder>100</loadorder>
 	</properties>
 
-    <announcement text="NPC flavors v1.12 (Out-of-control footwork)\n- by Tideturner"/>
+	<announcement text="NPC Flavors v2.0 (Viscous brain sac)\n- by Tideturner" font="emotefont" icon="npcflavors_icon"/>
 
-    <base>
-        <!-- Strings -->
-        <includefile source="strings/npc_flavors_strings.xml" />
-        <!-- NPC Flavors Scripts -->
-        <script name="CombatManagerOverride" file="scripts/manager_combat_override.lua" />
-        <script name="NPCFlavorData" file="scripts/npc_flavors_data.lua" />
-        <script name="NPCFlavorDataNpcTypes" file="scripts/npc_flavors_by_npctypes.lua" />
-        <script name="NPCFlavors" file="scripts/manager_npc_flavors.lua" />
+	<base>
+		<!-- Extension icon -->
+		<icon name="npcflavors_icon" file="graphics/logo.png" />
+		
+		<!-- Regenerate button icons -->
+		<icon name="button_npcf_regen" file="graphics/button.png" />
+		<icon name="button_npcf_regen_down" file="graphics/button.png" />
+		
+		<!-- Strings -->
+		<includefile source="strings/npc_flavors_strings.xml" />
+		
+		<!-- Combat Tracker UI Extension -->
+		<includefile source="ct/ct_entry_npcflavors.xml" />
+		
+		<!-- NPC Flavors Scripts -->
+		<!-- Utils -->
+		<script name="NPCFlavor_Debug" file="scripts/utils/npc_flavors_debug.lua" />
+		<script name="NPCFlavor_Options" file="scripts/utils/npc_flavors_options.lua" />
+		
+		<!-- Data - Word Categories (loaded first, aggregated by npc_flavors_words.lua) -->
+		<script name="NPCFlavor_Words_Physical" file="scripts/data/words/physical.lua" />
+		<script name="NPCFlavor_Words_Appearance" file="scripts/data/words/appearance.lua" />
+		<script name="NPCFlavor_Words_Item" file="scripts/data/words/items.lua" />
+		<script name="NPCFlavor_Words_Anatomy" file="scripts/data/words/anatomy.lua" />
+		<script name="NPCFlavor_Words_Behavior" file="scripts/data/words/behaviors.lua" />
+		<script name="NPCFlavor_Words_Social" file="scripts/data/words/social.lua" />
+		<script name="NPCFlavor_Words_Environment" file="scripts/data/words/environment.lua" />
+		<script name="NPCFlavor_Words_Emotion" file="scripts/data/words/emotions.lua" />
+		
+		<!-- Data - Template Types (loaded first, aggregated by npc_flavors_templates.lua) -->
+		<script name="NPCFlavor_Templates_Metadata" file="scripts/data/templates/metadata.lua" />
+		<script name="NPCFlavor_Templates_Generic" file="scripts/data/templates/generic.lua" />
+		<script name="NPCFlavor_Templates_Humanoid" file="scripts/data/templates/humanoid.lua" />
+		<script name="NPCFlavor_Templates_Undead" file="scripts/data/templates/undead.lua" />
+		<script name="NPCFlavor_Templates_Undead_Incorporeal" file="scripts/data/templates/undead_incorporeal.lua" />
+		<script name="NPCFlavor_Templates_Undead_Corporeal" file="scripts/data/templates/undead_corporeal.lua" />
+		<script name="NPCFlavor_Templates_Undead_Intelligent" file="scripts/data/templates/undead_intelligent.lua" />
+		<script name="NPCFlavor_Templates_Beast" file="scripts/data/templates/beast.lua" />
+		<script name="NPCFlavor_Templates_Aberration" file="scripts/data/templates/aberration.lua" />
+		<script name="NPCFlavor_Templates_Monstrosity" file="scripts/data/templates/monstrosity.lua" />
+		<script name="NPCFlavor_Templates_Dragon" file="scripts/data/templates/dragon.lua" />
+		<script name="NPCFlavor_Templates_Construct" file="scripts/data/templates/construct.lua" />
+		<script name="NPCFlavor_Templates_Elemental" file="scripts/data/templates/elemental.lua" />
+		<script name="NPCFlavor_Templates_Celestial" file="scripts/data/templates/celestial.lua" />
+		<script name="NPCFlavor_Templates_Fiend" file="scripts/data/templates/fiend.lua" />
+		<script name="NPCFlavor_Templates_Fey" file="scripts/data/templates/fey.lua" />
+		<script name="NPCFlavor_Templates_Giant" file="scripts/data/templates/giant.lua" />
+		<script name="NPCFlavor_Templates_Plant" file="scripts/data/templates/plant.lua" />
+		<script name="NPCFlavor_Templates_Ooze" file="scripts/data/templates/ooze.lua" />
+		
+		<!-- Data aggregators -->
+		<script name="NPCFlavor_Data" file="scripts/data/npc_flavors_words.lua" />
+		<script name="NPCFlavor_Templates" file="scripts/data/npc_flavors_templates.lua" />
+		
+		<!-- Managers -->
+		<script name="NPCFlavor_Types" file="scripts/managers/npc_flavors_types.lua" />
+		<script name="NPCFlavor_Parser" file="scripts/managers/npc_flavors_parser.lua" />
+		<script name="NPCFlavor_Generator" file="scripts/managers/npc_flavors_generator.lua" />
+		<script name="NPCFlavor_Combat" file="scripts/managers/npc_flavors_combat.lua" />
 	</base>
 </root>

@@ -1,1 +1,0 @@
-"fur", "hide", "mane", "mop", "shock", "bristles", "locks", "fuzz", "thatch", "wool", "pelt"

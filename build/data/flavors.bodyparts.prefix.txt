@@ -1,8 +1,0 @@
-"dirty", "filthy", "clean", "broken", "wounded", "mangled", "calloused",
-"big", "small", "long", "short", "stubby", "dazzling", "enormous", "miniscule",
-"tattooed", "painted", "pierced", "swollen", "shrunken", "ugly", "beautiful",
-"missing", "withered", "rotten", "scarred"
-"dirty", "filthy", "clean", "broken", "wounded", "mangled", "calloused",
-            "big", "small", "long", "short", "stubby", "infected", "enormous", "miniscule",
-            "tattooed", "painted", "pierced", "swollen", "shrunken", "ugly", "beautiful",
-            "missing", "smelly", "rotten", "scarred"

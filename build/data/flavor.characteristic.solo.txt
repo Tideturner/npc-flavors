@@ -1,3 +1,0 @@
-            "piercing eyes", "glazed eyes", "wild eyes", "crazed eyes", "bloodshot eyes", "cross eyed", "pointy ears", "big ears", "torn ear",
-            "hairy ears", "pierces ears", "bushy eyebrows", "big nose", "flat nose", "broken nose", "pierced nose", "scarred cheek", "scarred face",
-            "scarred neck", "scarred hands", "scarred arms", "scarred chin"
