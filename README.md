@@ -125,3 +125,7 @@ Templates use type-based organization with automatic fallback:
 3. `generic` (universal fallback)
 
 **Creating subtypes:** Add new template files with dot notation like `undead.intelligent`, `dragon.chromatic`, or `fiend.demon`
+
+## Attribution
+
+Logo and flavor button by Delapouite / https://game-icons.net/
