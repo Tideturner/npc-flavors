@@ -19,7 +19,7 @@
 --    ├─ generateFlavor() → returns flavored names
 --    └─ Update CT Node with new names
 --
--- 4. generateFlavor() [CORE ALGORITHM]
+-- 4. generateFlavor()
 --    ├─ selectTemplate() → weighted random by type hierarchy
 --    ├─ Parse pattern tokens (NPCFlavor_Parser)
 --    ├─ Resolve variables to words

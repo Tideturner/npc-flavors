@@ -1,121 +1,139 @@
--- NPC Flavors v2 - Slash Commands
--- Handles /npcftypes and /npcfexport commands
+-- Extracts unique NPC types from campaign database and writes to file
+
 -- ============================================================================
 -- INITIALIZATION
 -- ============================================================================
+
 function onInit()
-    -- Extension is host-only
     if not Session.IsHost then return; end
 
-    -- Register slash command for extracting NPC types
-    Comm.registerSlashHandler("npcftypes", extractNPCTypes);
+    Comm.registerSlashHandler("npcftypes", processExtractTypesCommand);
+    
+    NPCFlavor_Debug.logDebug("NPCFlavor_TypeExtractor: Initialized with /npcftypes command");
 end
 
 -- ============================================================================
--- SLASH COMMANDS
+-- COMMAND HANDLER
 -- ============================================================================
 
--- Extracts all unique NPC types from campaign data and outputs to chat
--- Usage: /npcftypes [raw]
--- Parameters:
---   raw - optional, shows raw type strings instead of parsed individual words
-function extractNPCTypes(sCommand, sParams)
-    local bShowRaw = sParams and string.lower(sParams):match("raw") ~= nil;
+-- Processes the /npcftypes slash command
+-- @param sCommand: command string
+-- @param sParams: command parameters (unused)
+function processExtractTypesCommand(sCommand, sParams)
+    ChatManager.SystemMessage("=== Extracting NPC Types ===");
 
-    -- Words to filter out (alignment qualifiers)
-    local tFilterWords = {
-        ["any"] = true,
-        ["evil"] = true,
-        ["neutral"] = true,
-        ["good"] = true,
-        ["lawful"] = true,
-        ["chaotic"] = true
-    };
+    local tUniqueTypes = extractUniqueNPCTypes();
+    local nCount = #tUniqueTypes;
 
-    -- Regex pattern to parse individual words from type field
-    -- Splits on spaces, commas, slashes, and parentheses
-    local sTypeParseRegEx = "[^%s,/%(%)]+";
-
-    -- Collect all unique types
-    local tUniqueTypes = {};
-    local nTotalNPCs = 0;
-
-    -- Search through campaign NPCs
-    for _, nodeNPC in pairs(DB.getChildrenGlobal("npc")) do
-        local sType = DB.getValue(nodeNPC, "type", "");
-
-        if sType and sType ~= "" then
-            nTotalNPCs = nTotalNPCs + 1;
-
-            if bShowRaw then
-                -- Store raw type string
-                tUniqueTypes[sType] = true;
-            else
-                -- Parse individual words from type field (including parentheses)
-                for sWord in sType:gmatch(sTypeParseRegEx) do
-                    local sLowerWord = sWord:lower();
-                    -- Skip filtered words
-                    if not tFilterWords[sLowerWord] then
-                        tUniqueTypes[sLowerWord] = true;
-                    end
-                end
-            end
-        end
+    if nCount == 0 then
+        ChatManager.SystemMessage("[NPC Flavors] No NPC types found in campaign.");
+        return;
     end
 
-    -- Also search through reference NPCs from modules
-    for _, nodeNPC in pairs(DB.getChildrenGlobal("reference.npcs")) do
-        local sType = DB.getValue(nodeNPC, "type", "");
+    table.sort(tUniqueTypes);
+    ChatManager.SystemMessage(string.format("[NPC Flavors] Extracted %d unique NPC types.", nCount));
 
-        if sType and sType ~= "" then
-            if bShowRaw then
-                tUniqueTypes[sType] = true;
-            else
-                for sWord in sType:gmatch(sTypeParseRegEx) do
-                    local sLowerWord = sWord:lower();
-                    if not tFilterWords[sLowerWord] then
-                        tUniqueTypes[sLowerWord] = true;
-                    end
-                end
-            end
-        end
-    end
-
-    -- Sort types alphabetically
-    local tSortedTypes = {};
-    for sType, _ in pairs(tUniqueTypes) do table.insert(tSortedTypes, sType); end
-    table.sort(tSortedTypes);
-
-    -- Build output message
-    local sMessage = "";
-    if bShowRaw then
-        sMessage = "[NPC Flavors] Raw NPC Type Strings (Total NPCs: " ..
-                       nTotalNPCs .. "):\n\n";
-    else
-        sMessage =
-            "[NPC Flavors] Parsed Individual Type Words (Total NPCs: " .. nTotalNPCs ..
-                "):\n\n";
-    end
-
-    for _, sType in ipairs(tSortedTypes) do
-        sMessage = sMessage .. "  " .. sType .. "\n";
-    end
-
-    if #tSortedTypes == 0 then
-        sMessage = sMessage .. "  No NPCs found in loaded modules.\n";
-    else
-        sMessage = sMessage .. "\nTotal unique types: " .. #tSortedTypes;
-    end
-
-    -- Output to chat
-    ChatManager.SystemMessage(sMessage);
-
-    -- Also save to file in campaign folder
-    local sFileName = bShowRaw and "npc_flavors_types_raw.txt" or "npc_flavors_types_parsed.txt";
-    local sFilePath = File.getCampaignFolder() .. sFileName;
-    File.saveTextFile(sFilePath, sMessage);
+    local bSuccess, sError = writeTypesToFile(tUniqueTypes);
     
-    ChatManager.SystemMessage("[NPC Flavors] Output saved to: " .. sFileName);
+    if not bSuccess then
+        ChatManager.SystemMessage("[NPC Flavors] Error writing file: " .. (sError or "unknown error"));
+        end
+    end
 
-    return true;
+-- ============================================================================
+-- TYPE EXTRACTION
+-- ============================================================================
+
+-- Extracts all unique NPC types from the campaign database
+-- @return: table array of unique type strings
+function extractUniqueNPCTypes()
+    local tTypes = {};
+    local tUniqueSet = {};
+    
+    -- Scan NPC database paths from various rulesets
+    local tNPCPaths = {
+        "npc",                  -- All rulesets
+        "reference.npcs",       -- CoreRPG, 4E, PFRPG, SavageWorlds, SWPF, Star Trek 2d20
+        "reference.npcdata",    -- 5E, 3.5E, 2E, PFRPG2
+        "reference.npc",        -- SFRPG, CosmereRPG, Fallout 2d20 (singular)
+        -- "human",                -- SavageWorlds, SWPF
+        -- "reference.humans",     -- SavageWorlds, SWPF
+        -- "reference.trap",       -- SFRPG (traps as NPCs)
+        -- "reference.vehicle"     -- SFRPG (vehicles as NPCs)
+    };
+    
+    for _, sBasePath in ipairs(tNPCPaths) do
+        NPCFlavor_Debug.logDebug("extractUniqueNPCTypes: Getting global children for '" .. sBasePath .. "'");
+
+        local tChildren = DB.getChildrenGlobal(sBasePath);
+        
+        if tChildren and #tChildren > 0 then
+            NPCFlavor_Debug.logDebug("extractUniqueNPCTypes: Found " .. #tChildren .. " children at '" .. sBasePath .. "'");
+            for _, nodeNPC in pairs(tChildren) do
+                local sType = DB.getValue(nodeNPC, "type", "");
+        if sType and sType ~= "" then
+                    sType = StringManager.trim(sType);
+                    
+                    if not tUniqueSet[sType] then
+                        tUniqueSet[sType] = true;
+                        NPCFlavor_Debug.logVerbose("Found type: " .. sType);
+                    end
+                end
+            end
+        else
+            NPCFlavor_Debug.logDebug("extractUniqueNPCTypes: No children found at '" .. sBasePath .. "'");
+        end
+    end
+
+    for sType, _ in pairs(tUniqueSet) do
+        table.insert(tTypes, sType);
+    end
+
+    return tTypes;
+    end
+
+-- ============================================================================
+-- FILE WRITING
+-- ============================================================================
+
+-- Writes types array to file in campaign folder
+-- @param tTypes: array of type strings
+-- @return: boolean success, string error message
+function writeTypesToFile(tTypes)
+    local sRuleset = User.getRulesetName() or "unknown";
+    
+    local sCampaignPath = File.getCampaignFolder();
+    if not sCampaignPath or sCampaignPath == "" then
+        return false, "Could not determine campaign folder path";
+    end
+    
+    -- Remove trailing slash if present
+    if string.sub(sCampaignPath, -1) == "/" or string.sub(sCampaignPath, -1) == "\\" then
+        sCampaignPath = string.sub(sCampaignPath, 1, -2);
+    end
+
+    local sFileName = string.format("types_%s.txt", sRuleset);
+    local sFilePath = sCampaignPath .. "/" .. sFileName;
+
+    local tLines = {
+        "Ruleset: " .. sRuleset,
+        "=== Types ==="
+    };
+    
+    for _, sType in ipairs(tTypes) do
+        table.insert(tLines, sType);
+    end
+    
+    local sContent = table.concat(tLines, "\n");
+    
+    local bSuccess = pcall(function()
+        File.saveTextFile(sFilePath, sContent);
+    end);
+    
+    if bSuccess then
+        ChatManager.SystemMessage("[NPC Flavors] Wrote types to: " .. sFilePath);
+        return true, nil;
+    else
+        return false, "File.saveTextFile failed";
+    end
 end

@@ -16,8 +16,7 @@ function onInit()
     originalAddNPC = CombatRecordManager.getRecordTypePostAddCallback("npc");
     CombatRecordManager.setRecordTypePostAddCallback("npc", onAddNPC);
 
-    originalAddBattle = CombatRecordManager.getRecordTypePostAddCallback(
-                            "battle");
+    originalAddBattle = CombatRecordManager.getRecordTypePostAddCallback("battle");
     CombatRecordManager.setRecordTypePostAddCallback("battle", onAddBattle);
 end
 

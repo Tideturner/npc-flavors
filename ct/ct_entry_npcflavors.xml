@@ -8,9 +8,8 @@
 	<!-- Button to regenerate flavor for NPC -->
 	<template name="button_npcf_regenerate">
 		<buttonfield name="button_npcf_regen">
-			<anchored to="leftanchor" width="18" height="18">
-				<top offset="0" />
-				<left relation="relative" offset="-16" postoffset="3" />
+			<anchored width="18" height="18">
+				<top offset="1" />
 			</anchored>
 			<icon normal="button_npcf_regen" pressed="button_npcf_regen_down" />
 			<tooltip textres="npcf_tooltip_regenerate" />
@@ -61,7 +60,23 @@
 	<!-- Extended CT entry that includes the regenerate button -->
 	<windowclass name="ct_entry" merge="join">
 		<sheetdata>
-			<button_npcf_regenerate />
+			<button_npcf_regenerate name="button_npcf_regen">
+				<anchored to="leftanchor" width="18" height="18">
+					<top offset="0" />
+					<left relation="relative" offset="-16" postoffset="3" />
+				</anchored>
+			</button_npcf_regenerate>
+		</sheetdata>
+	</windowclass>
+
+	<!-- Extended CTA entry for 2E ruleset (Combat Tracker Advanced) -->
+	<windowclass name="combatants_entry_host" merge="join">
+		<sheetdata>
+			<button_npcf_regenerate name="button_npcf_regen" insertbefore="active">
+				<anchored to="name_hidden">
+					<right anchor="right" offset="-3" />
+				</anchored>
+			</button_npcf_regenerate>
 		</sheetdata>
 	</windowclass>
 </root>

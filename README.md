@@ -128,4 +128,4 @@ Templates use type-based organization with automatic fallback:
 
 ## Attribution
 
-Logo and flavor button by Delapouite / https://game-icons.net/
+Logo and flavor button by Icon by Azbandar

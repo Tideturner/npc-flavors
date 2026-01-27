@@ -2,8 +2,27 @@
 
 function onInit()
     -- Metadata
-    StandardTypes = NPCFlavor_Templates_Metadata.Data.TemplateStandardTypes
-    TypeAliases = NPCFlavor_Templates_Metadata.Data.TemplateTypeAliases
+    StandardTypes = {
+        "aberration", "beast", "celestial", "construct", "dragon", "elemental",
+        "fey", "fiend", "giant", "humanoid", "monstrosity", "ooze", "plant",
+        "undead"
+    }
+    TypeAliases = {
+        ["beast"] = {"animal", "aquatic", "insect", "dinosaur", "vermin"},
+        ["aberration"] = {"outsider", "outsiders"},
+        ["fiend"] = {"daemon", "demon", "devil"},
+        ["celestial"] = {"angel", "archon"},
+        ["construct"] = {"animated", "golem"},
+        ["plant"] = {"fungus"},
+        ["ooze"] = {"blob", "jelly", "pudding", "cube"},
+        ["monstrosity"] = {"monstrous", "hybrid"},
+        
+        -- Undead subtypes for more specific flavor targeting
+        ["undead.incorporeal"] = {"ghost", "spectre", "wraith", "banshee"},
+        ["undead.corporeal"] = {"zombie", "skeleton", "mummy"},
+        ["undead.intelligent"] = {"vampire", "lich", "revenant", "dullahan"},
+        ["undead"] = {"ghoul", "ghast", "wight", "mohrg"}
+    }
 
     -- Aggregate all templates - Access as ScriptName.Data
     Templates = {

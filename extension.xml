@@ -11,10 +11,10 @@
 	<announcement text="NPC Flavors v2.0 (Viscous brain sac)\n- by Tideturner" font="emotefont" icon="npcflavors_icon"/>
 
 	<base>
-		<!-- Extension icon -->
-		<icon name="npcflavors_icon" file="graphics/logo.png" />
+		<!-- Extension icon - Icon by Azbandar -->
+		<icon name="npcflavors_icon" file="graphics/icon.png" />
 		
-		<!-- Regenerate button icons -->
+		<!-- Regenerate button - Icon by Azbandar -->
 		<icon name="button_npcf_regen" file="graphics/button.png" />
 		<icon name="button_npcf_regen_down" file="graphics/button.png" />
 		
@@ -28,6 +28,7 @@
 		<!-- Utils -->
 		<script name="NPCFlavor_Debug" file="scripts/utils/npc_flavors_debug.lua" />
 		<script name="NPCFlavor_Options" file="scripts/utils/npc_flavors_options.lua" />
+		<script name="NPCFlavor_Commands" file="scripts/utils/npc_flavors_commands.lua" />
 		
 		<!-- Data - Word Categories (loaded first, aggregated by npc_flavors_words.lua) -->
 		<script name="NPCFlavor_Words_Physical" file="scripts/data/words/physical.lua" />
@@ -40,7 +41,6 @@
 		<script name="NPCFlavor_Words_Emotion" file="scripts/data/words/emotions.lua" />
 		
 		<!-- Data - Template Types (loaded first, aggregated by npc_flavors_templates.lua) -->
-		<script name="NPCFlavor_Templates_Metadata" file="scripts/data/templates/metadata.lua" />
 		<script name="NPCFlavor_Templates_Generic" file="scripts/data/templates/generic.lua" />
 		<script name="NPCFlavor_Templates_Humanoid" file="scripts/data/templates/humanoid.lua" />
 		<script name="NPCFlavor_Templates_Undead" file="scripts/data/templates/undead.lua" />
