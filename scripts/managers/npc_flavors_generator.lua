@@ -116,6 +116,11 @@ function processNPCAdd(nodeEntry)
     -- Process the first occurrence if it exists and hasn't been processed
     local nodeFirst = getFirstOccurrenceNode(sBaseName);
     if nodeFirst then
+        -- Reset original name to ensure we store the correct base. First occurence doesn't get number suffix by FG
+        DB.setValue(nodeFirst, "npcf_original_name", "string", "");
+        DB.setValue(nodeFirst, "npcf_original_nonid", "string","");
+        storeOriginalNames(nodeFirst);
+
         applyFlavorWithChance(nodeFirst, nFlavorChance);
         tFirstOccurrence[sBaseName].has_npc_flavor = true;
     end
@@ -430,33 +435,45 @@ function storeOriginalNames(nodeEntry)
     -- Store original name if not already stored
     local sStoredOriginalName = DB.getValue(nodeEntry, "npcf_original_name", "");
     if sStoredOriginalName == "" then
-        local sName = DB.getValue(nodeEntry, "name", "");
-        DB.setValue(nodeEntry, "npcf_original_name", "string", sName);
-        NPCFlavor_Debug.logDebug("storeOriginalNames: Stored original name '" .. sName .. "'");
+        sStoredOriginalName = DB.getValue(nodeEntry, "name", "");
+        DB.setValue(nodeEntry, "npcf_original_name", "string", sStoredOriginalName);
+        NPCFlavor_Debug.logSimple("storeOriginalNames: Stored original name '" .. sStoredOriginalName .. "'");
     end
+
+    -- Extract suffix (number) from original name to preserve for non-ID if needed
+    local _, suffix = getBaseName(sStoredOriginalName);
     
     -- Store original non-ID name if not already stored
     local sStoredOriginalNonID = DB.getValue(nodeEntry, "npcf_original_nonid", "");
     if sStoredOriginalNonID == "" then
         -- Get the current non-ID name (either custom or FG default)
-        local sNonIDName = DB.getValue(nodeEntry, "nonid_name", "");
-        if sNonIDName ~= "" then
-            DB.setValue(nodeEntry, "npcf_original_nonid", "string", sNonIDName);
-            NPCFlavor_Debug.logDebug("storeOriginalNames: Stored original non-ID name '" .. sNonIDName .. "'");
+        sStoredOriginalNonID = getNonIDBaseName(nodeEntry, sStoredOriginalName);
+        if sStoredOriginalNonID ~= "" then
+            if suffix then
+                sStoredOriginalNonID = sStoredOriginalNonID .. " " .. suffix;
+            end
+            DB.setValue(nodeEntry, "npcf_original_nonid", "string", sStoredOriginalNonID);
+            NPCFlavor_Debug.logSimple("storeOriginalNames: Stored original non-ID name '" .. sStoredOriginalNonID .. "'");
         end
     end
 end
 
--- Extracts base name from NPC name by removing trailing numbering
+-- Extracts base name and optional number suffix from an NPC name
 -- @param sName: NPC name like "Goblin 3" or "Orc"
--- @return: base name like "Goblin" or "Orc"
+-- @return: base name like "Goblin" or "Orc", number like 3 or nil
 function getBaseName(sName)
-    if not sName or sName == "" then return ""; end
+    if not sName or sName == "" then return "", nil; end
 
-    -- Remove trailing " #" pattern (e.g., "Goblin 3" -> "Goblin")
-    local sBaseName = sName:match("^(.-)%s+%d+$") or sName;
-
-    return sBaseName;
+    -- Extract base name and number (e.g., "Goblin 3" -> "Goblin", 3)
+    local sBaseName, sNumber = sName:match("^(.-)%s+(%d+)$");
+    
+    if sBaseName then
+        -- Found a number pattern
+        return sBaseName, sNumber;
+    else
+        -- No number found
+        return sName, nil;
+    end
 end
 
 -- Gets the base name to use for non-identified NPCs based on NPCF_NONID option

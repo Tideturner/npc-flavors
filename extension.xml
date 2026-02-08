@@ -2,13 +2,13 @@
 <root version="3.0">
 	<properties>
 		<name>Feature: NPC Flavors</name>
-		<version>2.0</version>
+		<version>2.1</version>
 		<author>Tideturner</author>
 		<description>Add random template-based flavors to NPC names in the combat tracker</description>
 		<loadorder>100</loadorder>
 	</properties>
 
-	<announcement text="NPC Flavors v2.0 (Viscous brain sac)\n- by Tideturner" font="emotefont" icon="npcflavors_icon"/>
+	<announcement text="NPC Flavors v2.1 (Viscous brain sac)\n- by Tideturner" font="emotefont" icon="npcflavors_icon"/>
 
 	<base>
 		<!-- Extension icon - Icon by Azbandar -->
