@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  2E ruleset only (Combat Tracker Advanced).
+  Adds the regenerate / reset flavor button to CTA host entries.
+  extension.xml includes this file with ruleset="2E" so the merge target
+  exists; in other rulesets the merge would only log a missing-asset warning.
+  The button_npcf_regenerate template is defined in ct_entry_npcflavors.xml.
+-->
+
+<root>
+	<!-- Extended CTA entry for 2E ruleset (Combat Tracker Advanced) -->
+	<windowclass name="combatants_entry_host" merge="join">
+		<sheetdata>
+			<button_npcf_regenerate name="button_npcf_regen" insertbefore="active">
+				<anchored to="name_hidden">
+					<right anchor="right" offset="-3" />
+				</anchored>
+			</button_npcf_regenerate>
+		</sheetdata>
+	</windowclass>
+</root>

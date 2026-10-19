@@ -69,14 +69,6 @@
 		</sheetdata>
 	</windowclass>
 
-	<!-- Extended CTA entry for 2E ruleset (Combat Tracker Advanced) -->
-	<windowclass name="combatants_entry_host" merge="join">
-		<sheetdata>
-			<button_npcf_regenerate name="button_npcf_regen" insertbefore="active">
-				<anchored to="name_hidden">
-					<right anchor="right" offset="-3" />
-				</anchored>
-			</button_npcf_regenerate>
-		</sheetdata>
-	</windowclass>
+	<!-- The 2E (Combat Tracker Advanced) merge lives in ct_entry_npcflavors_2e.xml,
+	     included from extension.xml with ruleset="2E" only. -->
 </root>
